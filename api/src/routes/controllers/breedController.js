@@ -4,7 +4,8 @@ const {
 const axios = require("axios");
 const {
   Breed,
-  Temperament
+  Temperament,
+  breedTemperament
 } = require("../../db");
 const {
   API_KEY
@@ -96,16 +97,28 @@ async function createDog(req, res, next) {
       name,
       life_span,
       weight,
-      height
+      height,
+      temperaments
     } =
     req.body;
 
+  
     const newBreed = await Breed.create({
       name,
       life_span,
       weight,
       height
     });
+
+    temperaments.map( async t => {
+      const dbTemperament = await Temperament.findOrCreate({
+        where: {
+          name: t
+        }
+      });
+      newBreed.addTemperament(dbTemperament[0].dataValues.ID)
+    })
+    
 
     res.status(201).send(newBreed);
   } catch (error) {
