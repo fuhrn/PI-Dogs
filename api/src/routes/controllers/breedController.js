@@ -53,7 +53,18 @@ async function getAllDogs(req, res, next) {
   Promise.all([breedsFromApi, breedsFromDb])
     .then(respuesta => {
       const [breedsApi, breedsDb] = respuesta;
-      let allBreeds = [...breedsApi, ...breedsDb]
+      // vamos a filtrar la API con los campos que me interesan solamente
+      let filteredBreedsApi = breedsApi.map(breed => {
+        return {
+          id: breed.id,
+          name: breed.name,
+          height: breed.height.metric,
+          weight: breed.weight.metric,
+          life_span: breed.weight.metric
+        }
+      })
+
+      let allBreeds = [...filteredBreedsApi, ...breedsDb]
       res.send(allBreeds)
     })
   .catch(error => next(error))
