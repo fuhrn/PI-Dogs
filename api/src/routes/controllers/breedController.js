@@ -27,8 +27,10 @@ const {
 
 // usando try / catch
 async function getAllDogs(req, res, next) {
+  let breedsFromApi;
+  let breedsFromDb;
   try {
-    await axios({
+    breedsFromApi = await axios({
         headers: {
           'x-api-key': API_KEY
         },
@@ -36,10 +38,25 @@ async function getAllDogs(req, res, next) {
         url: "https://api.thedogapi.com/v1/breeds"
       })
       .then(results => results.data)
-      .then(results => res.send(results))
+      // .then(results => res.send(results))
   } catch (error) {
     next(error)
   }
+
+  try {  
+    breedsFromDb = await Breed.findAll()
+      // .then(results => res.send(results))
+  } catch (error) {
+    next(error)
+  }
+
+  Promise.all([breedsFromApi, breedsFromDb])
+    .then(respuesta => {
+      const [breedsApi, breedsDb] = respuesta;
+      let allBreeds = [...breedsApi, ...breedsDb]
+      res.send(allBreeds)
+    })
+  .catch(error => next(error))
 }
 
 async function getDogById(req, res, next) {
@@ -70,7 +87,7 @@ async function createDog(req, res, next) {
       weight,
       height
     } =
-      req.body;
+    req.body;
 
     const newBreed = await Breed.create({
       name,
