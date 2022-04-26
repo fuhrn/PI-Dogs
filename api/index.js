@@ -18,11 +18,29 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
-const { conn } = require('./src/db.js');
-const { API_KEY, TEMPERAMENTS_IN_DB } = process.env;
+const {
+  conn
+} = require('./src/db.js');
+const {
+  API_KEY,
+  TEMPERAMENTS_IN_DB
+} = process.env;
+const {
+  getTemperaments
+} = require('./src/routes/controllers/temperamentController');
+const {
+  get
+} = require('./src/routes/index.js');
+
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
+conn.sync({
+  force: true
+}).then(() => {
+  
+  // cargamos la Bd con los nombres de los temperamentos
+  getTemperaments()
+
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });

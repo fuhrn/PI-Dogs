@@ -28,7 +28,7 @@ const {
 // usando try / catch
 async function getAllDogs(req, res, next) {
   try {
-    let breedsFromApi = await axios({
+    await axios({
         headers: {
           'x-api-key': API_KEY
         },
@@ -47,7 +47,8 @@ async function getDogById(req, res, next) {
     const {
       id
     } = req.params;
-    let breedsFromApi = await axios({
+
+    await axios({
         headers: {
           'x-api-key': API_KEY
         },
@@ -62,8 +63,6 @@ async function getDogById(req, res, next) {
 }
 
 async function createDog(req, res, next) {
-  console.log('hola');
-
   try {
     const {
       name,
@@ -72,8 +71,6 @@ async function createDog(req, res, next) {
       height
     } =
       req.body;
-    
-    console.log('nombre: ',name)
 
     const newBreed = await Breed.create({
       name,
