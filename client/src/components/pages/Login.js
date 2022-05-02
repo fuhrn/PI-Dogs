@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Layout, Input, PasswordInput, Button, Spinner } from "components/common";
+import {
+  Layout,
+  Input,
+  PasswordInput,
+  Button,
+  Spinner,
+} from "components/common";
 import styled from "styled-components";
 
 const Form = styled.form`
@@ -12,9 +18,17 @@ const Form = styled.form`
   color: black;
   border: 4px;
 
-  .alt-text{
+  .alt-text {
     text-align: center;
     margin: 10px 0;
+  }
+
+  >${Button}:first-of-type {
+    margin-top: 40px;
+  }
+
+  >${Input}{
+    margin-top: 20px;
   }
 `;
 
@@ -33,12 +47,12 @@ export default function Login() {
   }
 
   useEffect(() => {
-    return() => {
-    if(timeout) {
-      clearTimeout(timeout);
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -52,22 +66,25 @@ export default function Login() {
     <Layout>
       <h1>Login</h1>
       <Form onSubmit={handleSubmit}>
-        {loading ? <Spinner /> :
-        <>
-          <Input
-            value={formFields.username}
-            onChange={handleInputChange}
-            name="username"
-            type="text"
-            placeholder="Username"
-          />
-          <PasswordInput
-            value={formFields.password}
-            onChange={handleInputChange}
-            name="password"
-          />
-        </>
-        }
+        {loading ? (
+          <Spinner />
+        ) : (
+          <>
+            <span>Login if you have an account</span>
+            <Input
+              value={formFields.username}
+              onChange={handleInputChange}
+              name="username"
+              type="text"
+              placeholder="Username"
+            />
+            <PasswordInput
+              value={formFields.password}
+              onChange={handleInputChange}
+              name="password"
+            />
+          </>
+        )}
         <Button large type="submit" disabled={loading}>
           {loading ? "Loading..." : "Login"}
         </Button>
