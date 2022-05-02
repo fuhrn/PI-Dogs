@@ -27,6 +27,8 @@ const {
 
 
 // usando try / catch
+// FALTA el filtrado por temperamento y por tipo de raza: API y creada -> desde redux
+// FALTA la busqueda por nombre para el boton search --> desde redux
 async function getAllDogs(req, res, next) {
   let breedsFromApi;
   let breedsFromDb;
@@ -39,14 +41,12 @@ async function getAllDogs(req, res, next) {
         url: "https://api.thedogapi.com/v1/breeds"
       })
       .then(results => results.data)
-      // .then(results => res.send(results))
   } catch (error) {
     next(error)
   }
 
   try {  
     breedsFromDb = await Breed.findAll()
-      // .then(results => res.send(results))
   } catch (error) {
     next(error)
   }
@@ -71,6 +71,7 @@ async function getAllDogs(req, res, next) {
   .catch(error => next(error))
 }
 
+// ruta que usaremos para ver la pagina de detalle de cada breed
 async function getDogById(req, res, next) {
   try {
     const {
@@ -102,7 +103,6 @@ async function createDog(req, res, next) {
     } =
     req.body;
 
-  
     const newBreed = await Breed.create({
       name,
       life_span,
@@ -119,7 +119,6 @@ async function createDog(req, res, next) {
       newBreed.addTemperament(dbTemperament[0].dataValues.ID)
     })
     
-
     res.status(201).send(newBreed);
   } catch (error) {
     next(error)

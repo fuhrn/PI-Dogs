@@ -123,7 +123,7 @@ __Ruta de creación de raza de perro__: debe contener
   - Nombre
   - Altura (Diferenciar entre altura mínima y máxima)
   - Peso (Diferenciar entre peso mínimo y máximo)
-  - Años de vida
+  - Años de vida (Diferenciar entre años de vida mínimo y máximo: agregado por NES)
 - [ ] Posibilidad de seleccionar/agregar uno o más temperamentos
 - [ ] Botón/Opción para crear una nueva raza de perro
 
