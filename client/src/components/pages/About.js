@@ -1,12 +1,11 @@
-import { Header, Layout, HeaderSearch } from "components/common";
+import { Header, Layout } from "components/common";
 
-export default function Home() {
+export default function About() {
   return (
     <div>
       <Header />
-      <HeaderSearch />
       <Layout>
-        <h1>Home</h1>
+        <h1>About</h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras viverra
           odio non molestie posuere. Nunc venenatis ex nec erat gravida

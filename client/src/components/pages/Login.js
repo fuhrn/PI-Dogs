@@ -5,6 +5,7 @@ import {
   PasswordInput,
   Button,
   Spinner,
+  Header,
 } from "components/common";
 import styled from "styled-components";
 
@@ -63,40 +64,43 @@ export default function Login() {
   }
 
   return (
-    <Layout>
-      <h1>Login</h1>
-      <Form onSubmit={handleSubmit}>
-        {loading ? (
-          <Spinner />
-        ) : (
-          <>
-            <span>Login if you have an account</span>
-            <Input
-              value={formFields.username}
-              onChange={handleInputChange}
-              name="username"
-              type="text"
-              placeholder="Username"
-            />
-            <PasswordInput
-              value={formFields.password}
-              onChange={handleInputChange}
-              name="password"
-            />
-          </>
-        )}
-        <Button large type="submit" disabled={loading}>
-          {loading ? "Loading..." : "Login"}
-        </Button>
-        {!loading && (
-          <>
-            <div className="alt-text">or</div>
-            <Button secondary type="button">
-              Register
-            </Button>
-          </>
-        )}
-      </Form>
-    </Layout>
+    <>
+      <Header />
+      <Layout>
+        <h1>Login</h1>
+        <Form onSubmit={handleSubmit}>
+          {loading ? (
+            <Spinner />
+          ) : (
+            <>
+              <span>Login if you have an account</span>
+              <Input
+                value={formFields.username}
+                onChange={handleInputChange}
+                name="username"
+                type="text"
+                placeholder="Username"
+              />
+              <PasswordInput
+                value={formFields.password}
+                onChange={handleInputChange}
+                name="password"
+              />
+            </>
+          )}
+          <Button large type="submit" disabled={loading}>
+            {loading ? "Loading..." : "Login"}
+          </Button>
+          {!loading && (
+            <>
+              <div className="alt-text">or</div>
+              <Button secondary type="button">
+                Register
+              </Button>
+            </>
+          )}
+        </Form>
+      </Layout>
+    </>
   );
 }

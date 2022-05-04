@@ -90,21 +90,26 @@ export function Header() {
 
   return (
     <HeaderWrapper>
-      <MobileMenuIcon onClick={() => setMenuOpen(s => !s)}>
+      <MobileMenuIcon onClick={() => setMenuOpen((s) => !s)}>
         <div />
         <div />
         <div />
       </MobileMenuIcon>
       <Menu open={menuOpen}>
-        <StyledLink to="/" isActive={pathname === '/'}>
+        <StyledLink to="/" isActive={pathname === "/"}>
           Home
         </StyledLink>
-        <StyledLink to="/login" isActive={pathname === '/login'} >
+        <StyledLink to="/create" isActive={pathname === "/create"}>
+          Create
+        </StyledLink>
+        <StyledLink to="/about" isActive={pathname === "/about"}>
+          About
+        </StyledLink>
+        <StyledLink to="/login" isActive={pathname === "/login"}>
           Login
         </StyledLink>
-        <Toggle isActive={id === 'dark'} onToggle={ setTheme }/>
+        <Toggle isActive={id === "dark"} onToggle={setTheme} />
       </Menu>
-
     </HeaderWrapper>
-  )
+  );
 }

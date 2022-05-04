@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Home from 'components/pages/Home';
 import Login from 'components/pages/Login';
+import Create from "components/pages/Create";
+import About from "components/pages/About";
 import NotFound from './pages/NotFound';
 import LightTheme from 'themes/light';
 import DarkTheme from 'themes/dark';
@@ -21,20 +23,25 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   const [theme, setTheme] = useState(LightTheme);
   return (
-    <ThemeProvider theme={{
-      ...theme, setTheme: () => {
-      setTheme(s => s.id === 'light' ? DarkTheme : LightTheme)  //s -> state of theme
-    } }}>
+    <ThemeProvider
+      theme={{
+        ...theme,
+        setTheme: () => {
+          setTheme((s) => (s.id === "light" ? DarkTheme : LightTheme)); //s -> state of theme
+        },
+      }}
+    >
       <BrowserRouter>
         <GlobalStyle />
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='*' element={<NotFound />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/create" element={<Create />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/about" element={<About />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>     
+      </BrowserRouter>
     </ThemeProvider>
-
   );
 }
 
