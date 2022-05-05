@@ -7,3 +7,6 @@ export * from './PasswordInput';
 export * from './Spinner';
 export * from './Toggle';
 export * from "./Select";
+export * from "./DisplayDogs";
+export * from "./Pagination";
+export * from "./Card";

@@ -1,5 +1,4 @@
-import React, { useState, useContext } from "react";
-import styled, { ThemeContext } from "styled-components";
+import styled from "styled-components";
 import { Select, Input } from "components/common";
 
 const HeaderWrapper = styled.header`
@@ -19,7 +18,6 @@ const HeaderWrapper = styled.header`
 
 const Form = styled.form`
   display: flex;
-  /* width: ; */
 `;
 
 const Fieldset = styled.fieldset`
@@ -40,21 +38,17 @@ const InputR = styled.input``;
 const Div = styled.div`
   display: flex;
   align-items: center;
-  /* width: 100%; */
-  /* margin: auto 10px; */
-  /* padding: auto 10px; */
 `
 
 export function HeaderSearch() {
   return (
     <HeaderWrapper>
       <Select concept="Temperamento" />
-      <Select concept="Raza" />
       <Form action="">
         <Fieldset>
           <Legend>Sort by Name</Legend>
           <Div>
-            <InputR type="radio" name="name" checked/>
+            <InputR type="radio" name="name" defaultChecked />
             <Label>Asc</Label>
           </Div>
           <Div>
@@ -65,11 +59,15 @@ export function HeaderSearch() {
         <Fieldset>
           <Legend>Sort by Breed</Legend>
           <Div>
-            <InputR type="radio" name="breed" checked/>
+            <InputR type="radio" name="breed" defaultChecked />
+            <Label>All</Label>
+          </Div>
+          <Div>
+            <InputR type="radio" name="breed" />
             <Label>API</Label>
           </Div>
           <Div>
-            <InputR type="radio" name="breed"/>
+            <InputR type="radio" name="breed" />
             <Label>Created</Label>
           </Div>
         </Fieldset>

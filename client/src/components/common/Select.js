@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { getTemperaments } from "redux/actions";
 
-
-const DropDownContainer = styled("div")`
-  /* width: 30.5em; */
-  /* margin: auto auto; */
-  /* padding: 10px 8px;  */
-`;
+const DropDownContainer = styled("div")``;
 
 const Label = styled.label`
   font-size: 12px;
@@ -24,10 +22,8 @@ const DropDownHeader = styled("header")`
   font-size: 1em;
   font-family: "Open Sans";
   margin-right: 8px;
-  /* width: 100%; */
   min-width: 168px;
   box-sizing: border-box;
-  /* margin-top: 0.5em; */
   height: 40px;
   margin-bottom: 0.5em;
   background: #ffffff;
@@ -46,7 +42,6 @@ const DropDownList = styled("ul")`
   background: #ffffff;
   border: 2px solid #e5e5e5;
   box-sizing: border-box;
-
   border-radius: 4px;
   font-size: 1em;
   font-family: "Open Sans";
@@ -60,37 +55,58 @@ const ListItem = styled("li")`
   margin-bottom: 0.8em;
 `;
 
-const options = ["Mangoes", "Apples", "Oranges"];
-
 export function Select(props) {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
+
+  const [options, setOptions] = useState([]);
+
+  useEffect(() => {
+    // lleno el store con los temperamentos
+    dispatch(getTemperaments());
+
+    // llenar el array para las options del select de temperamento
+    async function fetchTemperaments() {
+      const temps = await axios
+        .get("http://localhost:3001/api/temperaments")
+        .then((result) => result.data)
+        .then(result => result.map(temp => {
+          return { ID: temp.ID, name: temp.name }
+        }))
+      setOptions(options => temps);
+    }
+    fetchTemperaments();
+  }, [dispatch]);
+
+  // en la primera renderizada, options todavia no esta llenado, pero en la segunda si lo completa
+  let initialHeader = options[0] === undefined ? "" : options[0].name;
 
   const toggling = () => setIsOpen(!isOpen);
 
   // traigo via props el label que quiero mostrar
-  const concept = props.concept
+  const concept = props.concept;
 
   const onOptionClicked = (value) => () => {
     setSelectedOption(value);
     setIsOpen(false);
-    console.log(selectedOption);
+    // console.log(selectedOption);
   };
 
   return (
     <>
       <DropDownContainer>
-        <Label>{ concept }</Label>
+        <Label>{concept}</Label>
         <DropDownHeader onClick={toggling}>
-          {selectedOption || "Mangoes"}
+          {selectedOption || initialHeader}
         </DropDownHeader>
-        {/* <Label></Label> */}
+        <Label></Label>
         {isOpen && (
           <DropDownListContainer>
             <DropDownList>
               {options.map((option) => (
-                <ListItem onClick={onOptionClicked(option)} key={Math.random()}>
-                  {option}
+                <ListItem onClick={onOptionClicked(option.name)} key={option.ID}>
+                  {option.name}
                 </ListItem>
               ))}
             </DropDownList>
