@@ -13,8 +13,10 @@ const HeaderWrapper = styled.header`
   top: 0;
   background-image: linear-gradient(
     to right,
-    ${(p) => p.theme.primaryColor},
-    ${(p) => p.theme.secondaryColor}
+    /* ${(p) => p.theme.primaryColor},
+    ${(p) => p.theme.secondaryColor}, */
+    ${(p) => p.primary},
+    ${(p) => p.secondary}
   );
   border-bottom: 3px solid ${(p) => p.theme.secondaryColor};
 `;
@@ -29,7 +31,7 @@ const Menu = styled.nav`
   padding: 8px;
   box-sizing: border-box;
   border-bottom: 3px solid ${(p) => p.theme.secondaryColor};
-  background: ${p => p.theme.bodyBackgroundColor};
+  background: ${(p) => p.theme.bodyBackgroundColor};
 
   @media (min-width: 768px) {
     display: flex;
@@ -43,10 +45,6 @@ const Menu = styled.nav`
   }
 `;
 
-// prueba 
-// const MenuAlt = styled(Menu)`
-//   border-top: 5px solid black;
-// `
 
 const Link = ({ isActive, children, ...props }) => {
   return (
@@ -83,13 +81,13 @@ const MobileMenuIcon = styled.div`
   }
 `
 
-export function Header() {
+export function Header({primary, secondary}) {
   const { pathname } = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const { id, setTheme } = useContext(ThemeContext)
 
   return (
-    <HeaderWrapper>
+    <HeaderWrapper primary={primary} secondary={secondary}>
       <MobileMenuIcon onClick={() => setMenuOpen((s) => !s)}>
         <div />
         <div />

@@ -1,17 +1,17 @@
 import { Header, Layout, HeaderSearch, DisplayDogs } from "components/common";
+import theme from "themes/light";
+
+const primaryHeader = theme.primaryColor;
+const secondaryHeader = theme.secondaryColor;
 
 
 export default function Dogs() {
   return (
     <div>
-      <Header />
+      <Header primary={primaryHeader} secondary={secondaryHeader} />
       <HeaderSearch />
       <Layout>
-        <DisplayDogs/>
-
-
-
-
+        <DisplayDogs />
       </Layout>
     </div>
   );

@@ -1,10 +1,13 @@
 import styled from "styled-components";
 import bkg from "../../assets/dogs.jpeg";
 import { Header } from "components/common";
+import HomeContent, { } from './HomeContent'
 import theme from "themes/light";
 
-const primary = theme.primaryColor + '20';
-const secondary = theme.secondaryColor + "20";
+const primaryHeader = theme.primaryColor + "25";
+const secondaryHeader = theme.secondaryColor + "25";
+const primary = theme.primaryColor + "15";
+const secondary = theme.secondaryColor + "15";
 
 
 
@@ -36,9 +39,10 @@ const Background = styled.div`
 const Home = ({ children }) => {
   return (
     <Wrapper>
-      <Header/>
+      <Header primary={primaryHeader} secondary={secondaryHeader} />
       <Img src={bkg} alt="" />
-      <Background/>
+      <Background />
+      <HomeContent />
     </Wrapper>
   );
 };
