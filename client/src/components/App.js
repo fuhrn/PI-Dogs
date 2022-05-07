@@ -13,7 +13,6 @@ import DarkTheme from 'themes/dark';
 
 const GlobalStyle = createGlobalStyle`
   body{
-    background: ${(p) => p.theme.bodyBackgroundColor};
     min-height: 100vh;
     margin: 0;
     color: ${(p) => p.theme.bodyFontColor};

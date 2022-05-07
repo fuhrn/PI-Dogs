@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { getDogs } from "../../redux/actions";
 import { Pagination, Card } from "components/common";
 import styled from "styled-components";
