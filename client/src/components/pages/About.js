@@ -1,11 +1,26 @@
 import { Header, Layout } from "components/common";
+import styled from "styled-components";
+
+const H1 = styled.h1`
+  &:hover {
+      color: red;
+  }
+`
+
+const Button = styled.button`
+  &:hover {
+    background-color: blue;
+    color: red;
+  }
+`;
 
 export default function About() {
   return (
     <div>
       <Header />
       <Layout>
-        <h1>About</h1>
+        <Button>prueba</Button>
+        <H1>About</H1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras viverra
           odio non molestie posuere. Nunc venenatis ex nec erat gravida

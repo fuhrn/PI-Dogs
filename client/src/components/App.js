@@ -3,6 +3,7 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Home from 'components/pages/Home';
+import Dogs from "components/pages/Dogs";
 import Login from 'components/pages/Login';
 import Create from "components/pages/Create";
 import About from "components/pages/About";
@@ -35,6 +36,7 @@ function App() {
         <GlobalStyle />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/dogs" element={<Dogs />} />
           <Route path="/create" element={<Create />} />
           <Route path="/login" element={<Login />} />
           <Route path="/about" element={<About />} />

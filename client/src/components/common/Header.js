@@ -99,6 +99,9 @@ export function Header() {
         <StyledLink to="/" isActive={pathname === "/"}>
           Home
         </StyledLink>
+        <StyledLink to="/dogs" isActive={pathname === "/dogs"}>
+          Dogs
+        </StyledLink>
         <StyledLink to="/create" isActive={pathname === "/create"}>
           Create
         </StyledLink>

@@ -8,6 +8,7 @@ const HeaderWrapper = styled.header`
   display: flex;
   padding: 0 16px;
   height: 90px;
+  width: 100%;
   background-image: linear-gradient(
     to right,
     ${(p) => p.theme.primaryColor},
@@ -27,18 +28,17 @@ const Fieldset = styled.fieldset`
 `;
 
 const Legend = styled.legend`
-font-size: small;
-`
+  font-size: small;
+`;
 
-const Label = styled.label`
-`
+const Label = styled.label``;
 
 const InputR = styled.input``;
 
 const Div = styled.div`
   display: flex;
   align-items: center;
-`
+`;
 
 export function HeaderSearch() {
   return (

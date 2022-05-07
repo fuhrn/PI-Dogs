@@ -1,53 +1,45 @@
 import styled from "styled-components";
 
 const CardWrapper = styled.article`
-  margin: 30px;
   display: flex;
-  border-radius: 10px;
-  overflow: hidden;
-  width: 505px;
-  height: 250px;
-  /* background-color: var(--color); */
+  flex-direction: column;
+  border-radius: 1rem;
+  overflow: auto;
+  width: ${(props) => props.size};
+  height: 400px;
+  background-color: ${(p) => p.theme.secondaryColor};
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
+  margin: 1rem;
   cursor: pointer;
   transition: transform 250ms ease;
   &:hover {
     transform: scale(1.02);
   }
 
-  .contImg {
-    width: 50%;
-    height: 100%;
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+  .img {
+    width: ${(props) => props.size};
+    height: 60%;
+    object-fit: cover;
   }
+
   .info {
+    height: 40%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    padding: 20px;
-    width: 50%;
-    height: 100%;
+    padding: 0 1rem;
 
     h2 {
-      font-size: 30px;
+      font-size: 1.5rem;
+    }
+
+    h5 {
+      font-size: 1rem;
+      margin: 0 0 10px 0;
     }
 
     .temp-container {
-      h5 {
-        font-size: 20px;
-      }
-      margin: 0 auto;
-      .temperaments {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        .temp {
-          margin-right: 10px;
-        }
+      margin: 0 0 20px 0;
       }
     }
   }
@@ -55,19 +47,14 @@ const CardWrapper = styled.article`
 
 export function Card({ image, name, temperament }) {
   return (
-    <CardWrapper>
-      <div className='contImg'>
-        <img src={image} alt="" />
-      </div>
+    <CardWrapper size="20rem">
+      <img className="img" src={image} alt="" />
 
-      <div className='info'>
+      <div className="info">
         <h2>{name}</h2>
-        <div className='temp-container'></div>
         <h5>Temperament</h5>
-        <div className='temperaments'>
-          {
-            temperament.map(temp => <p key={temp} className='temp'>{ temp }</p>)
-          }
+        <div className="temp-container">
+          {temperament.join(', ').concat('.')}
         </div>
       </div>
     </CardWrapper>

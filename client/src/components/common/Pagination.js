@@ -1,9 +1,34 @@
 import styled from "styled-components";
 
-const Ul = styled.ul`
+const NavWrapper = styled.nav`
+  ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    margin: auto;
+    padding: 0;
+  }
 
- /* className={styles.barra} */
+  li {
+    margin: 0 8px;
+  }
 
+  button {
+    background: linear-gradient(
+      to bottom,
+      ${(p) => p.theme.primaryColor},
+      ${(p) => p.theme.secondaryColor}
+    );
+
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 120%;
+
+    &:hover {
+      box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+  }
 `;
 
 export function Pagination({ dogsPerPage, allDogs, paginado }) {
@@ -14,7 +39,7 @@ export function Pagination({ dogsPerPage, allDogs, paginado }) {
   }
 
   return (
-    <nav>
+    <NavWrapper>
       <ul>
         {pagesArray?.map((number) => (
           <li key={number}>
@@ -37,6 +62,6 @@ export function Pagination({ dogsPerPage, allDogs, paginado }) {
           </li>
         ))}
       </ul>
-    </nav>
+    </NavWrapper>
   );
 }
