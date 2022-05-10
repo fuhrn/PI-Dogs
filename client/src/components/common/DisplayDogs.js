@@ -26,7 +26,7 @@ export function DisplayDogs() {
     dispatch(getDogs());
   }, [dispatch]);
 
-  // traigo del estado allDogs
+  // y si esto se lo trae del componente Dogs???
   const allDogs = useSelector((state) => state.allDogs);
 
   // Paginado

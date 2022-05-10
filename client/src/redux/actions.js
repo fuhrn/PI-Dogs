@@ -11,6 +11,13 @@ export function getDogs() {
   };
 }
 
+export const filteredDogs = (payload) => {
+  return {
+    type: "FILTERED_DOGS",
+    payload,
+  }
+}
+
 export function getTemperaments() {
   return function (dispatch) {
     axios.get("http://localhost:3001/api/temperaments").then((response) => {
@@ -19,14 +26,6 @@ export function getTemperaments() {
         payload: response.data,
       });
     });
-  };
-}
-
-export function filteredByTemperament(payload) {
-  // el payload en este caso significa el value="..." que yo le mande desde el componente, osea el nombre del temperamento
-  return {
-    type: "FILTERED_BY_TEMPERAMENTS",
-    payload,
   };
 }
 
@@ -54,21 +53,21 @@ export function getDetail(name) {
 }
 
 // igual al anterior, podemos simplificar?
-export function searchBreed(name) {
-  return async function (dispatch) {
-    try {
-      var json = await axios.get(
-        `http://localhost:3001/api/dogs?name=${name}`
-      );
-      return dispatch({
-        type: "SEARCH_RECIPE",
-        payload: json.data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
+// export function searchBreed(name) {
+//   return async function (dispatch) {
+//     try {
+//       var json = await axios.get(
+//         `http://localhost:3001/api/dogs?name=${name}`
+//       );
+//       return dispatch({
+//         type: "SEARCH_DOG",
+//         payload: json.data,
+//       });
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+// }
 
 export function postBreed(payload) {
   return async function () {

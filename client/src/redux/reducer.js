@@ -24,48 +24,13 @@ function rootReducer(state = initialState, action) {
         ...state,
         detail: action.payload,
       };
-    case "FILTERED_BY_TEMPERAMENTS":
-      const dogs = state.copyDogs;
-      // console.log(Dogs);
-      const temperamentFiltered =
-        action.payload === ""
-          ? dogs
-          : dogs.filter((breed) => {
-              return breed.temperaments
-                .map((d) => d.name)
-                .includes(action.payload.toLowerCase());
-            });
-      // console.log(Dogs);
+    case "FILTERED_DOGS":
+
       return {
         ...state,
-        allDogs: temperamentFiltered,
+        allDogs: action.payload,
       };
     case "ORDER_BY_NAME":
-      const sortedDogsName =
-        action.payload === "Asc"
-          ? state.allDogs.sort(function (a, b) {
-              if (a.name.toLowerCase() > b.name.toLowerCase()) {
-                return 1;
-              }
-              if (b.name.toLowerCase() > a.name.toLowerCase()) {
-                return -1;
-              }
-              return 0;
-            })
-          : state.allDogs.sort(function (a, b) {
-              if (a.name.toLowerCase() > b.name.toLowerCase()) {
-                return -1;
-              }
-              if (b.name.toLowerCase() > a.name.toLowerCase()) {
-                return 1;
-              }
-              return 0;
-            });
-      return {
-        ...state,
-        allDogs: sortedDogsName,
-      };
-    case "SEARCH_BREED":
       return {
         ...state,
         allDogs: action.payload,

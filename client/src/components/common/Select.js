@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { filteredDogs } from "../../redux/actions";
 import axios from "axios";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getTemperaments } from "redux/actions";
 
 const DropDownContainer = styled("div")``;
@@ -56,6 +57,8 @@ const ListItem = styled("li")`
 `;
 
 export function Select(props) {
+  const dogs = useSelector((state) => state.copyDogs);
+
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -71,10 +74,12 @@ export function Select(props) {
       const temps = await axios
         .get("http://localhost:3001/api/temperaments")
         .then((result) => result.data)
-        .then(result => result.map(temp => {
-          return { ID: temp.ID, name: temp.name }
-        }))
-      setOptions(options => temps);
+        .then((result) =>
+          result.map((temp) => {
+            return { ID: temp.ID, name: temp.name };
+          })
+        );
+      setOptions((options) => temps);
     }
     fetchTemperaments();
   }, [dispatch]);
@@ -90,7 +95,10 @@ export function Select(props) {
   const onOptionClicked = (value) => () => {
     setSelectedOption(value);
     setIsOpen(false);
-    // console.log(selectedOption);
+
+    let search = value;
+    let filtDogs = dogs.filter((dog) => dog.temperament.includes(search));
+    dispatch(filteredDogs(filtDogs));
   };
 
   return (
@@ -105,7 +113,10 @@ export function Select(props) {
           <DropDownListContainer>
             <DropDownList>
               {options.map((option) => (
-                <ListItem onClick={onOptionClicked(option.name)} key={option.ID}>
+                <ListItem
+                  onClick={onOptionClicked(option.name)}
+                  key={option.ID}
+                >
                   {option.name}
                 </ListItem>
               ))}

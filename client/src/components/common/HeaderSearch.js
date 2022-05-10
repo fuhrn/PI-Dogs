@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { filteredDogs, orderByName } from "../../redux/actions";
 import styled from "styled-components";
 import { Select, Input } from "components/common";
 
@@ -43,6 +46,51 @@ const Div = styled.div`
 `;
 
 export function HeaderSearch() {
+  const dogs = useSelector((state) => state.copyDogs);
+
+  const dispatch = useDispatch();
+
+  // search dogs
+  function handleSearchChange(e) {
+    e.preventDefault();
+    let search = e.target.value.toLowerCase();
+    let filtDogs = dogs.filter((dog) =>
+      dog.name.toLowerCase().includes(search)
+    );
+    dispatch(filteredDogs(filtDogs));
+    // console.log("search: ", filteredDogs);
+  }
+
+  // sortByName: asc || des
+  function handleSortByName(e) {
+    e.preventDefault();
+    let search = e.target.name;
+    let orderedDogs = dogs;
+    const sortedDogsName =
+      search === "asc"
+        ? orderedDogs.sort(function (a, b) {
+            if (a.name.toLowerCase() > b.name.toLowerCase()) {
+              return 1;
+            }
+            if (b.name.toLowerCase() > a.name.toLowerCase()) {
+              return -1;
+            }
+            return 0;
+          })
+        : orderedDogs.sort(function (a, b) {
+            if (a.name.toLowerCase() > b.name.toLowerCase()) {
+              return -1;
+            }
+            if (b.name.toLowerCase() > a.name.toLowerCase()) {
+              return 1;
+            }
+            return 0;
+          });
+
+    dispatch(orderByName(sortedDogsName));
+    // console.log("sort: ", filteredDogs);
+  }
+
   return (
     <HeaderWrapper>
       <Select concept="Temperamento" />
@@ -50,11 +98,16 @@ export function HeaderSearch() {
         <Fieldset>
           <Legend>Sort by Name</Legend>
           <Div>
-            <InputR type="radio" name="name" defaultChecked />
+            <InputR
+              type="radio"
+              name="asc"
+              defaultChecked
+              onClick={handleSortByName}
+            />
             <Label>Asc</Label>
           </Div>
           <Div>
-            <InputR type="radio" name="name" />
+            <InputR type="radio" name="des" onClick={handleSortByName} />
             <Label>Des</Label>
           </Div>
         </Fieldset>
@@ -80,6 +133,7 @@ export function HeaderSearch() {
         width="200px"
         marginTop="16px"
         marginLeft="32px"
+        onChange={handleSearchChange}
       />
     </HeaderWrapper>
   );

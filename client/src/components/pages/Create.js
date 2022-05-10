@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { getTemperaments, postBreed } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,47 @@ const secondaryHeader = theme.secondaryColor;
 const H1 = styled.h1`
   margin-top: 100px;
   margin-left: 200px;
+`;
+
+const Label = styled.label`
+  display: block;
+  margin-top: 12px;
+`;
+
+const Ul = styled.ul`
+  margin: 6px;
+`;
+
+const Li = styled.li`
+  display: flex;
+  margin-bottom: 8px;
+  align-items: center;
+  height: 24px;
+`;
+
+const Temp = styled.p`
+  margin-right: 6px;
+`;
+
+const SelectButton = styled.button`
+  padding: 0px 5px;
+  color: red;
+  height: fit-content;
+`;
+
+const Select = styled.select`
+  /* padding: 8px 8px 16px 8px; */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+  font-family: "Open Sans";
+  margin-right: 8px;
+  min-width: 168px;
+  width: 100%;
+  box-sizing: border-box;
+  height: 40px;
+  margin-bottom: 0.5em;
+  background: #ffffff;
 `;
 
 const Form = styled.form`
@@ -47,6 +88,8 @@ function validate(formFields) {
 
   let errors = {};
 
+  // ojo estos else if tienen que estar ordenados como lo estan los campos input
+  // para que pueda imprimir el mensaje de error
   if (formFields.name.length < 3) {
     errors.name = "Your breed name must have a name minimum 3 letters long";
   } else if (formFields.name.length > 30) {
@@ -80,6 +123,8 @@ function validate(formFields) {
   } else if (formFields.weightMax > 80) {
     errors.weightMax =
       "We are creating a dog, not an elephant 🐘!! Keep your weight under 80";
+  } else if (formFields.image === "") {
+    errors.image = "carga la imagen";
   } else if (!validLifeSpan.test(formFields.life_span)) {
     errors.life_span = "Fill life-span with provided pattern '00-99'";
   } else if (formFields.temperaments.length === 0) {
@@ -93,18 +138,20 @@ export default function Create() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const sendHome = () => {
+    navigate("/dogs");
+  };
+
   // inicialmente formEnabled esta en 'true' porque si bien errors es {} vacio, formFields esta vacio tambien
   // y por lo tanto el boton de CREATE tiene que permanecer disabled
   // loading pasa a 'true' cuando empieza a hacer el handleSubmit()
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
 
-
   useEffect(() => {
     dispatch(getTemperaments());
   }, [dispatch]);
 
-  
   const [errors, setErrors] = useState({});
 
   const allTemperaments = useSelector((state) => state.temperaments);
@@ -120,7 +167,6 @@ export default function Create() {
     temperaments: [],
   });
 
-
   useEffect(() => {
     if (
       !Object.getOwnPropertyNames(errors).length &&
@@ -130,15 +176,17 @@ export default function Create() {
       formFields.weightMin &&
       formFields.weightMax &&
       formFields.life_span &&
-      // falta url
+      formFields.image &&
       formFields.temperaments.length
     ) {
       setDisabled(false);
+      // console.log("1_disabled: ", disabled);
     } else {
       setDisabled(true);
+      // console.log("errores: ", errors);
+      // console.log("2_disabled: ", disabled);
     }
   }, [errors, formFields]);
-
 
   function handleInputChange(e) {
     setFormFields((input) => {
@@ -150,10 +198,11 @@ export default function Create() {
 
       setErrors(validate(newInput));
 
+      // console.log("errors: ", errors);
+
       return newInput;
     });
   }
-
 
   function handleSelect(e) {
     if (!formFields.temperaments.includes(e.target.value)) {
@@ -162,8 +211,8 @@ export default function Create() {
         temperaments: [...formFields.temperaments, e.target.value],
       });
     }
+    setErrors({});
   }
-
 
   function handleDeleteTemperament(el) {
     setFormFields({
@@ -177,12 +226,11 @@ export default function Create() {
     );
   }
 
-
   function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
 
-    // dispatch(postBreed(formFields));
+    dispatch(postBreed(formFields));
     setLoading(false);
 
     alert("Doggie created 👏");
@@ -196,11 +244,11 @@ export default function Create() {
       image: "",
       temperaments: [],
     });
-    navigate.push("/home");
+    sendHome();
   }
 
   return (
-    <>
+    <Fragment>
       <Header primary={primaryHeader} secondary={secondaryHeader} />
       <Layout>
         <H1>Create breed</H1>
@@ -210,118 +258,171 @@ export default function Create() {
           ) : (
             <>
               <span>Required fields (*)</span>
-              <Input
-                value={formFields.name}
-                onChange={handleInputChange}
-                name="name"
-                type="text"
-                placeholder="(*) Breed name"
-                required
-              />
+              <Label htmlFor="name">
+                Name:
+                <Input
+                  value={formFields.name}
+                  onChange={handleInputChange}
+                  name="name"
+                  type="text"
+                  placeholder="(*) Breed name"
+                  required
+                />
+              </Label>
               {errors.name && (
                 <p className="error">
                   <strong>{errors.name}</strong>
                 </p>
               )}
-              <Input
-                value={formFields.heightMin}
-                onChange={handleInputChange}
-                name="heightMin"
-                type="number"
-                placeholder="(*) Minimum height in cms - e.g.: 10 "
-                min="10"
-                max="120"
-                required
-              />
+
+              <Label htmlFor="heightMin">
+                Minimum height:
+                <Input
+                  value={formFields.heightMin}
+                  onChange={handleInputChange}
+                  name="heightMin"
+                  type="number"
+                  placeholder="(*) Minimum height in cms - e.g.: 10 "
+                  min="10"
+                  max="120"
+                  required
+                />
+              </Label>
               {errors.heightMin && (
                 <p className="error">
                   <strong>{errors.heightMin}</strong>
                 </p>
               )}
-              <Input
-                value={formFields.heightMax}
-                onChange={handleInputChange}
-                name="heightMax"
-                type="number"
-                placeholder="(*) Maximum height in cms - e.g.: 120"
-                required
-                min="10"
-                max="120"
-              />
+
+              <Label htmlFor="heightMax">
+                Maximum height:
+                <Input
+                  value={formFields.heightMax}
+                  onChange={handleInputChange}
+                  name="heightMax"
+                  type="number"
+                  placeholder="(*) Maximum height in cms - e.g.: 120"
+                  required
+                  min="10"
+                  max="120"
+                />
+              </Label>
               {errors.heightMax && (
                 <p className="error">
                   <strong>{errors.heightMax}</strong>
                 </p>
               )}
-              <Input
-                value={formFields.weightMin}
-                onChange={handleInputChange}
-                name="weightMin"
-                type="number"
-                placeholder="(*) Minimum weight in kilos - e.g.: 1"
-                required
-                min="1"
-                max="80"
-              />
+
+              <Label htmlFor="weightMin">
+                Minimum weight:
+                <Input
+                  value={formFields.weightMin}
+                  onChange={handleInputChange}
+                  name="weightMin"
+                  type="number"
+                  placeholder="(*) Minimum weight in kilos - e.g.: 1"
+                  required
+                  min="1"
+                  max="80"
+                />
+              </Label>
               {errors.weightMin && (
                 <p className="error">
                   <strong>{errors.weightMin}</strong>
                 </p>
               )}
-              <Input
-                value={formFields.weightMax}
-                onChange={handleInputChange}
-                name="weightMax"
-                type="number"
-                placeholder="(*) Maximum weight in kilos - e.g.: 80"
-                required
-                min="0"
-                max="80"
-              />
+
+              <Label htmlFor="weightMax">
+                Maximum weight:
+                <Input
+                  value={formFields.weightMax}
+                  onChange={handleInputChange}
+                  name="weightMax"
+                  type="number"
+                  placeholder="(*) Maximum weight in kilos - e.g.: 80"
+                  required
+                  min="0"
+                  max="80"
+                />
+              </Label>
               {errors.weightMax && (
                 <p className="error">
                   <strong>{errors.weightMax}</strong>
                 </p>
               )}
 
-              <Input
-                value={formFields.image}
-                onChange={handleInputChange}
-                name="image"
-                type="text"
-                placeholder="Image URL - leave blank if none"
-              />
-              <div>
-                <select onChange={(e) => handleSelect(e)}>
-                  <option value="selected" hidden>
-                    Temperaments
-                  </option>
-                  {allTemperaments?.map((temp) => {
-                    return (
-                      <option value={temp.name} key={temp.name}>
-                        {temp.name}
-                      </option>
-                    );
-                  })}
-                </select>
+              <Label htmlFor="image">
+                Image URL:
+                <Input
+                  value={formFields.image}
+                  onChange={handleInputChange}
+                  name="image"
+                  type="url"
+                  pattern="https://.*"
+                  placeholder="https://example.com - leave blank if none"
+                />
+              </Label>
+              {errors.image && (
+                <p className="error">
+                  <strong>{errors.image}</strong>
+                </p>
+              )}
 
-                {formFields.temperaments.map((el) => {
-                  return (
-                    <ul className="allTemps" key={el}>
-                      <li>
-                        <p className="temp">
+              <Label htmlFor="life_span">
+                Life Span in years:
+                <Input
+                  value={formFields.life_span}
+                  onChange={handleInputChange}
+                  name="life_span"
+                  type="text"
+                  placeholder="Life span in years e.g. '2-4' - Pattern '00-99'"
+                  maxlength="5"
+                />
+              </Label>
+              {errors.life_span && (
+                <p className="error">
+                  <strong>{errors.life_span}</strong>
+                </p>
+              )}
+
+              <div>
+                <Label htmlFor="temps">
+                  Temperaments:
+                  <Select
+                    concept="Temperamento"
+                    name="temps"
+                    onChange={(e) => handleSelect(e)}
+                  >
+                    <option value="selected" hidden>
+                      Temperaments
+                    </option>
+                    {allTemperaments?.map((temp) => {
+                      return (
+                        <option value={temp.name} key={temp.name}>
+                          {temp.name}
+                        </option>
+                      );
+                    })}
+                  </Select>
+                </Label>
+
+                <Ul>
+                  {formFields.temperaments.map((el) => {
+                    return (
+                      <Li key={el}>
+                        <Temp>
                           <strong>{el}</strong>
-                        </p>
-                        <button
+                        </Temp>
+                        <SelectButton
                           onClick={() => handleDeleteTemperament(el)}
                           className="x"
                         >
                           X
-                        </button>
-                      </li>
-                    </ul>
-                  );
-                })}
+                        </SelectButton>
+                      </Li>
+                    );
+                  })}
+                </Ul>
 
                 {errors.temperaments && (
                   <p className="error">
@@ -329,35 +430,13 @@ export default function Create() {
                   </p>
                 )}
               </div>
-              <Input
-                value={formFields.life_span}
-                onChange={handleInputChange}
-                name="life_span"
-                type="text"
-                placeholder="Life span in years e.g. '2-4' - Pattern '00-99'"
-                // pattern="^[0-9]{1,2}[-][0-9]{1,2}$"
-                maxlength="5"
-              />
-              {errors.life_span && (
-                <p className="error">
-                  <strong>{errors.life_span}</strong>
-                </p>
-              )}
             </>
           )}
-          {/* inicialmente loading esta en false y pasa a true con el submit */}
-          {/* loading queda en true hasta tanto el submit se haya realizado, y asi evito multiples submits */}
-          {/* pero necesito que formDisabled este en false tambien: */}
-          {/* valor inicial de formDisabled es TRUE y pasa a FALSE cuando errors.length === 0 && !loading*/}
-
-          {/* 
-          loading false && errors.length === 0   //console output: false && true = false significa que formEnabled sera false y puedo usar Create
-          */}
           <Button large type="submit" disabled={disabled}>
             {loading ? "Loading..." : "Create"}
           </Button>
         </Form>
       </Layout>
-    </>
+    </Fragment>
   );
 }
