@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Header, Layout, Input, Button, Spinner } from "components/common";
 import theme from "themes/light";
 import styled from "styled-components";
-import { useRef } from "react";
 
 const primaryHeader = theme.primaryColor;
 const secondaryHeader = theme.secondaryColor;
@@ -100,6 +99,12 @@ export default function Create() {
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
 
+
+  useEffect(() => {
+    dispatch(getTemperaments());
+  }, [dispatch]);
+
+  
   const [errors, setErrors] = useState({});
 
   const allTemperaments = useSelector((state) => state.temperaments);
@@ -115,69 +120,8 @@ export default function Create() {
     temperaments: [],
   });
 
-  // console.log("errors temperaments: ", errors.temperaments);
-  // console.log("loading: ", loading, "disabled: ", disabled, "errors: ", errors);
-  // console.log("formFields: ", formFields);
-
-  function handleInputChange(e) {
-    setFormFields((input) => {
-      // para asegurarme que siempre tengo el input actualizado...
-      const newInput = {
-        ...input,
-        [e.target.name]: e.target.value,
-      };
-
-      const errors = validate(newInput);
-
-      setErrors(errors);
-
-      if (Object.keys(errors).length === 0 && !loading) {
-        setDisabled(false);
-      } else {
-        setDisabled(true);
-      }
-
-      return newInput;
-    });
-  }
-
 
   useEffect(() => {
-    dispatch(getTemperaments());
-  }, [dispatch]);
-
-  
-  function handleSelect(e) {
-    if (!formFields.temperaments.includes(e.target.value)) {
-      setFormFields({
-        ...formFields,
-        temperaments: [...formFields.temperaments, e.target.value],
-      });
-    }
-  }
-
-  function handleDeleteTemperament(el) {
-    // console.log("fileds1: ", formFields.temperaments);
-    setFormFields({
-      ...formFields,
-      temperaments: formFields.temperaments.filter((temp) => temp !== el),
-    });
-  }
-
- 
-  const errores = useRef({})
-  useEffect(() => {
-    // con esto logro tener los errores cuando borro todos los temperamentos
-    errores.current = validate(formFields);
-    // ahora necesito modificar el estado de los errores
-    console.log("f3: ", errores.current);
-  }, [formFields]);
-
-
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    setLoading(true);
     if (
       !Object.getOwnPropertyNames(errors).length &&
       formFields.name &&
@@ -189,26 +133,70 @@ export default function Create() {
       // falta url
       formFields.temperaments.length
     ) {
-      // dispatch(postBreed(formFields));
-      // console.log(formFields);
-
-      alert("Doggie created 👏");
-      setFormFields({
-        name: "",
-        heightMin: "",
-        heightMax: "",
-        weightMin: "",
-        weightMax: "",
-        life_span: "",
-        image: "",
-        temperaments: [],
-      });
-      navigate.push("/home");
+      setDisabled(false);
     } else {
-      // console.log(errors);
-      setLoading(false);
-      alert("Doggie can´t be created with these data 🤷‍♂️");
+      setDisabled(true);
     }
+  }, [errors, formFields]);
+
+
+  function handleInputChange(e) {
+    setFormFields((input) => {
+      // para asegurarme que siempre tengo el input actualizado...
+      const newInput = {
+        ...input,
+        [e.target.name]: e.target.value,
+      };
+
+      setErrors(validate(newInput));
+
+      return newInput;
+    });
+  }
+
+
+  function handleSelect(e) {
+    if (!formFields.temperaments.includes(e.target.value)) {
+      setFormFields({
+        ...formFields,
+        temperaments: [...formFields.temperaments, e.target.value],
+      });
+    }
+  }
+
+
+  function handleDeleteTemperament(el) {
+    setFormFields({
+      ...formFields,
+      temperaments: formFields.temperaments.filter((temp) => temp !== el),
+    });
+    setErrors(
+      validate({
+        ...formFields,
+      })
+    );
+  }
+
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setLoading(true);
+
+    // dispatch(postBreed(formFields));
+    setLoading(false);
+
+    alert("Doggie created 👏");
+    setFormFields({
+      name: "",
+      heightMin: "",
+      heightMax: "",
+      weightMin: "",
+      weightMax: "",
+      life_span: "",
+      image: "",
+      temperaments: [],
+    });
+    navigate.push("/home");
   }
 
   return (
@@ -335,17 +323,11 @@ export default function Create() {
                   );
                 })}
 
-                {errores.current.temperaments && (
-                  <p className="error">
-                    <strong>{errores.current.temperaments}</strong>
-                  </p>
-                )}
-{/* 
                 {errors.temperaments && (
                   <p className="error">
                     <strong>{errors.temperaments}</strong>
                   </p>
-                )} */}
+                )}
               </div>
               <Input
                 value={formFields.life_span}
