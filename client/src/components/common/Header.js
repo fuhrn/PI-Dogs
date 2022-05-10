@@ -1,7 +1,8 @@
-import React, { useState, useContext } from 'react';
-import styled, {ThemeContext} from 'styled-components';
-import { Link as ReactRouterDomLink, useLocation } from 'react-router-dom';
-import { Toggle } from './Toggle';
+import React, { useState, useContext } from "react";
+import styled, { ThemeContext } from "styled-components";
+import { Link as ReactRouterDomLink, useLocation } from "react-router-dom";
+import { Toggle } from "./Toggle";
+import logo from "../../assets/logo.svg";
 
 const HeaderWrapper = styled.header`
   height: 60px;
@@ -13,12 +14,27 @@ const HeaderWrapper = styled.header`
   top: 0;
   background-image: linear-gradient(
     to right,
-    /* ${(p) => p.theme.primaryColor},
-    ${(p) => p.theme.secondaryColor}, */
     ${(p) => p.primary},
     ${(p) => p.secondary}
   );
   border-bottom: 3px solid ${(p) => p.theme.secondaryColor};
+`;
+
+const Logo = styled.nav`
+  display: flex;
+  margin-left: 30px;
+  text-shadow: 3px 2px 4px #000000;
+
+  .div {
+    color: ${(p) => p.theme.secondaryColor};
+    font-size: 40px;
+    padding-left: 10px;
+    margin: aut;
+  }
+
+  .svg {
+    filter: drop-shadow(3px 2px 4px #000000);
+  }
 `;
 
 const Menu = styled.nav`
@@ -28,6 +44,7 @@ const Menu = styled.nav`
   width: 100%;
   top: 60px;
   left: 0;
+  right: 40px;
   padding: 8px;
   box-sizing: border-box;
   border-bottom: 3px solid ${(p) => p.theme.secondaryColor};
@@ -45,14 +62,9 @@ const Menu = styled.nav`
   }
 `;
 
-
 const Link = ({ isActive, children, ...props }) => {
-  return (
-    <ReactRouterDomLink {...props}>
-      {children}
-    </ReactRouterDomLink>
-  )
-}
+  return <ReactRouterDomLink {...props}>{children}</ReactRouterDomLink>;
+};
 
 const StyledLink = styled(Link)`
   padding: 4px 8px;
@@ -60,31 +72,31 @@ const StyledLink = styled(Link)`
   text-align: center;
   box-sizing: border-box;
   margin: auto 0;
-  font-weight: ${p => p.isActive ? 'bold' : 'normal'};
-  color: ${p => p.theme.bodyFontColor};
-`
+  font-weight: ${(p) => (p.isActive ? "bold" : "normal")};
+  color: ${(p) => p.theme.bodyFontColor};
+`;
 
 const MobileMenuIcon = styled.div`
   margin: auto 0 auto auto;
   width: 25px;
   min-width: 25px;
   padding: 5px;
-  >div{
+  > div {
     height: 3px;
-    background: ${p => p.theme.bodyFontColor};
+    background: ${(p) => p.theme.bodyFontColor};
     margin: 5px 0;
     width: 100%;
   }
 
-  @media(min-width: 768px) {
+  @media (min-width: 768px) {
     display: none;
   }
-`
+`;
 
-export function Header({primary, secondary}) {
+export function Header({ primary, secondary }) {
   const { pathname } = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
-  const { id, setTheme } = useContext(ThemeContext)
+  const { id, setTheme } = useContext(ThemeContext);
 
   return (
     <HeaderWrapper primary={primary} secondary={secondary}>
@@ -93,6 +105,10 @@ export function Header({primary, secondary}) {
         <div />
         <div />
       </MobileMenuIcon>
+      <Logo>
+        <img className="svg" src={logo} alt="logo" />
+        <div className="div">Henry Pet Shop</div>
+      </Logo>
       <Menu open={menuOpen}>
         <StyledLink to="/" isActive={pathname === "/"}>
           Home

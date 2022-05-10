@@ -7,19 +7,11 @@ const H1 = styled.h1`
   }
 `
 
-const Button = styled.button`
-  &:hover {
-    background-color: blue;
-    color: red;
-  }
-`;
-
 export default function About() {
   return (
     <div>
       <Header />
       <Layout>
-        <Button>prueba</Button>
         <H1>About</H1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras viverra

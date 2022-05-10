@@ -6,7 +6,8 @@ const HeaderWrapper = styled.header`
   margin: 60px auto 0 auto;
   box-sizing: border-box;
   display: flex;
-  padding: 0 16px;
+  justify-content: center;
+  padding: 8px 16px;
   height: 90px;
   width: 100%;
   background-image: linear-gradient(
@@ -25,6 +26,7 @@ const Fieldset = styled.fieldset`
   display: flex;
   height: 60px;
   width: 100px;
+  margin-left: 32px;
 `;
 
 const Legend = styled.legend`
@@ -76,8 +78,8 @@ export function HeaderSearch() {
         type="text"
         placeholder="Search..."
         width="200px"
-        marginTop="23px"
-        marginLeft="8px"
+        marginTop="16px"
+        marginLeft="32px"
       />
     </HeaderWrapper>
   );

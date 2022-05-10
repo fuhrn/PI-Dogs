@@ -1,9 +1,9 @@
 const theme = {
-  id: 'light',
-  primaryColor: "#f8049c",
-  secondaryColor: "#fdd54f",
-  bodyBackgroundColor: 'white',
-  bodyFontColor: 'black',
+  id: "light",
+  primaryColor: "#D8E810",
+  secondaryColor: "#FF931E",
+  bodyBackgroundColor: "white",
+  bodyFontColor: "black",
 };
 
 export default theme;

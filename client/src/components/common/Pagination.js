@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const NavWrapper = styled.nav`
+
   ul {
     display: flex;
     justify-content: center;

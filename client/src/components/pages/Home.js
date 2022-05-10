@@ -10,7 +10,6 @@ const primary = theme.primaryColor + "15";
 const secondary = theme.secondaryColor + "15";
 
 
-
 const Wrapper = styled.div`
     display: grid;
     height: 100%;   /*el 100% de la altura visible del viewport*/
