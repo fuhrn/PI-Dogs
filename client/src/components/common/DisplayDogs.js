@@ -49,19 +49,23 @@ export function DisplayDogs() {
       ></Pagination>
 
       <DogsGrid>
-        {currentDogs?.map((dog) => {
-          return (
-            // revisar el link que esta MAL
-            // <Link key={dog.id} to={`/recipe/${dog.id}`}>
-            <Card
-              image={dog.image}
-              name={dog.name}
-              temperament={dog.temperament}
-              key={dog.id}
-            ></Card>
-            // {/* </Link> */}
-          );
-        })}
+        {/* <ul> */}
+          {currentDogs?.map((dog) => {
+            return (
+              // revisar el link que esta MAL
+              // <Link key={dog.id} to={`/recipe/${dog.id}`}>
+
+                <Card
+                  image={dog.image}
+                  name={dog.name}
+                  temperament={dog.temperament}
+                  key={dog.id.toString()}
+                />
+
+              // {/* </Link> */}
+            );
+          })}
+        {/* </ul> */}
       </DogsGrid>
     </DogsWrapper>
   );

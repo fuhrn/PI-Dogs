@@ -2,7 +2,7 @@ const initialState = {
   allDogs: [], // me trae todo
   copyDogs: [], // para hacerle filtros y guardar el state
   temperaments: [], // me traigo los temperamentos
-  detail: [], // me trago el detalle de cada Breed por nombre
+  detail: [], // me traigo el detalle de cada Breed por nombre
 };
 
 function rootReducer(state = initialState, action) {
@@ -25,7 +25,6 @@ function rootReducer(state = initialState, action) {
         detail: action.payload,
       };
     case "FILTERED_DOGS":
-
       return {
         ...state,
         allDogs: action.payload,

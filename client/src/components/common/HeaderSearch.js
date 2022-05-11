@@ -46,28 +46,46 @@ const Div = styled.div`
 `;
 
 export function HeaderSearch() {
-  const dogs = useSelector((state) => state.copyDogs);
+  const [sortByName, setSortByName] = useState("asc");
+  const handleSortByNameChange = (e) => {
+    setSortByName(e.target.value);
+    handleSortByName(sortByName);
+  };
+
+  // preparing deep cloning dogs
+  const dogs1 = useSelector((state) => state.copyDogs);
+  let dogs = [];
+
+  // preparing deep cloning orderedDogs
+  const orderedDogs1 = useSelector((state) => state.copyDogs);
+  let orderedDogs = [];
 
   const dispatch = useDispatch();
 
+  // para borrar input search luego de apretado enter
+  function handleKeyDown(e) {
+    if (e.key === "Enter") {
+      e.target.value = '';
+    }
+  }
+
   // search dogs
   function handleSearchChange(e) {
+    dogs = JSON.parse(JSON.stringify(dogs1));
     e.preventDefault();
     let search = e.target.value.toLowerCase();
     let filtDogs = dogs.filter((dog) =>
       dog.name.toLowerCase().includes(search)
     );
     dispatch(filteredDogs(filtDogs));
-    // console.log("search: ", filteredDogs);
   }
 
   // sortByName: asc || des
-  function handleSortByName(e) {
-    e.preventDefault();
-    let search = e.target.name;
-    let orderedDogs = dogs;
+  function handleSortByName(order) {
+    orderedDogs = JSON.parse(JSON.stringify(orderedDogs1));
+    // let orderedDogs = dogs;
     const sortedDogsName =
-      search === "asc"
+      order === "des"
         ? orderedDogs.sort(function (a, b) {
             if (a.name.toLowerCase() > b.name.toLowerCase()) {
               return 1;
@@ -88,7 +106,7 @@ export function HeaderSearch() {
           });
 
     dispatch(orderByName(sortedDogsName));
-    // console.log("sort: ", filteredDogs);
+    // console.log("sort: ", sortedDogsName);
   }
 
   return (
@@ -99,15 +117,24 @@ export function HeaderSearch() {
           <Legend>Sort by Name</Legend>
           <Div>
             <InputR
+              id="sortAsc"
               type="radio"
-              name="asc"
-              defaultChecked
-              onClick={handleSortByName}
+              name="sort"
+              checked={sortByName === "asc" ? true : false}
+              value="asc"
+              onChange={handleSortByNameChange}
             />
             <Label>Asc</Label>
           </Div>
           <Div>
-            <InputR type="radio" name="des" onClick={handleSortByName} />
+            <InputR
+              id="sortDes"
+              type="radio"
+              name="sort"
+              checked={sortByName === "des" ? true : false}
+              value="des"
+              onChange={handleSortByNameChange}
+            />
             <Label>Des</Label>
           </Div>
         </Fieldset>
@@ -134,6 +161,7 @@ export function HeaderSearch() {
         marginTop="16px"
         marginLeft="32px"
         onChange={handleSearchChange}
+        onKeyDown={handleKeyDown}
       />
     </HeaderWrapper>
   );

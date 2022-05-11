@@ -42,10 +42,9 @@ const CardWrapper = styled.article`
       margin: 0 0 20px 0;
       }
     }
-  }
 `;
 
-export function Card({ image, name, temperament }) {
+export function Card({ image, name, temperament}) {
   return (
     <CardWrapper size="20rem">
       <img className="img" src={image} alt="" />

@@ -18,6 +18,13 @@ export const filteredDogs = (payload) => {
   }
 }
 
+export function orderByName(payload) {
+  return {
+    type: "ORDER_BY_NAME",
+    payload,
+  };
+}
+
 export function getTemperaments() {
   return function (dispatch) {
     axios.get("http://localhost:3001/api/temperaments").then((response) => {
@@ -29,12 +36,7 @@ export function getTemperaments() {
   };
 }
 
-export function orderByName(payload) {
-  return {
-    type: "ORDER_BY_NAME",
-    payload,
-  };
-}
+
 
 // hay que buscar por nombre completo via query params el detalle de la razo. 
 // si tiras nombre exacto te trae un solo breed
@@ -47,7 +49,7 @@ export function getDetail(name) {
         payload: json.data,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 }
