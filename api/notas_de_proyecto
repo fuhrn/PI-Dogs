@@ -1,0 +1,35 @@
+a) si puedo levantar el servidor node, significa que pudo conectarse a la base de datos. 
+b) Ojo que en la terminal PostgreSQL will not require a password to login.
+c) para duplicar vsCode y verlo en dos pantallas: con duplicate Workspace p.e., pero que pantalla destino no tenga una aplicacion full screen
+
+
+Comandos PostgreSQL mas usuales
+1) You can use the \l command to get a list of all available databases.
+2) Enlisting the available tables in the current database: \dt
+3) Switching to another database: \c <database_name>
+4) Describing a particular table: \d <table_name>
+5) Knowing the version of PostgreSQL: SELECT version();
+6) Seeing the previously executed command: \g
+7) Enlisting all the available commands: \?
+8) Knowing the syntaxes of PostgreSQL statements: \h. Example \h DROP TABLE
+9) Knowing the execution times of queries: You first give the \timing command. After the timing option is enabled, you can run your query: example "select * from train_table limit 10;"
+10) psql + text editor: if you execute the \e command, it opens the last executed command/query written in a text editor, and it also lets you edit and rerun it.
+11) Connect to PostgreSQL database: $ psql -d database -U  user -W
+12) List available schema: \dn
+13) List available functions: \df
+14) List available views: \dv
+15) List users and their roles:\du
+16) Command history: \s. If you want to save the command history to a file, you need to specify the file name followed the \s command as follows: \s filename
+17) Quit psql: \q
+18) Para saber si tengo conexiones a una DB 'newDb': select datname,numbackends from  pg_stat_database where datname='newdb';
+
+NOTAS:
+CREATE DATABASE "food";     -> los nombres entre comillas, ojo
+SELECT * FROM table;        -> para ver los registros de la table
+
+PENDIENTES:
+a) como conseguir todos los tipos de dieta posibles. La base es lo que te ofrece la pagina, pero el resto hay que sacarlos de las recetas directamente....
+
+
+
+

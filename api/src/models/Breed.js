@@ -4,7 +4,7 @@ const {
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
-  // defino el modelo
+  // los temperamentos los tengo que crear con la tabla pivot
   sequelize.define("breed", {
     id: {
       type: DataTypes.UUID,
@@ -25,6 +25,9 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     life_span: {
+      type: DataTypes.STRING,
+    },
+    image: {
       type: DataTypes.STRING,
     },
   });
