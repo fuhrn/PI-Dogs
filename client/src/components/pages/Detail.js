@@ -78,7 +78,7 @@ export default function Detail() {
   return (
     <>
       <Header primary={primaryHeader} secondary={secondaryHeader} />
-      {/* <Layout>
+      <Layout>
         {dog ? (
           <>
             <H1>Dog Detail</H1>
@@ -107,7 +107,7 @@ export default function Detail() {
             </H1>
           </div>
         )}
-      </Layout> */}
+      </Layout>
     </>
   );
 }
