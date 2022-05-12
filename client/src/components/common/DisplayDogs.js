@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDogs } from "../../redux/actions";
 import { Pagination, Card } from "components/common";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const DogsWrapper = styled.main`
@@ -20,13 +21,12 @@ const DogsGrid = styled.section`
 `;
 
 export function DisplayDogs() {
-  // voy a cargar el estado de dogs "before mount"
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getDogs());
   }, [dispatch]);
 
-  // y si esto se lo trae del componente Dogs???
+
   const allDogs = useSelector((state) => state.allDogs);
 
   // Paginado
@@ -50,21 +50,19 @@ export function DisplayDogs() {
 
       <DogsGrid>
         {/* <ul> */}
-          {currentDogs?.map((dog) => {
-            return (
-              // revisar el link que esta MAL
-              // <Link key={dog.id} to={`/recipe/${dog.id}`}>
-
-                <Card
-                  image={dog.image}
-                  name={dog.name}
-                  temperament={dog.temperament}
-                  key={dog.id.toString()}
-                />
-
-              // {/* </Link> */}
-            );
-          })}
+        {currentDogs?.map((dog) => {
+          return (
+            // revisar el link que esta MAL
+            <Link key={dog.id } to={`/dogs/${dog.id}`}>
+              <Card
+                image={dog.image}
+                name={dog.name}
+                temperament={dog.temperament}
+                key={dog.id.toString()}
+              />
+            </Link>
+          );
+        })}
         {/* </ul> */}
       </DogsGrid>
     </DogsWrapper>

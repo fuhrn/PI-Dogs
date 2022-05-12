@@ -2,12 +2,37 @@ import axios from "axios";
 
 export function getDogs() {
   return function (dispatch) {
-    axios.get("http://localhost:3001/api/dogs").then((response) => {
-      return dispatch({
-        type: "GET_DOGS",
-        payload: response.data,
+    try {
+      axios.get("http://localhost:3001/api/dogs").then((response) => {
+        return dispatch({
+          type: "GET_DOGS",
+          payload: response.data,
+        });
       });
-    });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function getDetail(id) {
+  return async function (dispatch) {
+    try {
+      var dogf;
+      var json = await axios
+        .get(`http://localhost:3001/api/dogs`)
+        .then((dogs) => dogs.data)
+        .then((dogs) => {
+          let dogF = dogs.filter((dog) => dog.id === id);
+          // let dog = dogs[0];
+          return dispatch({
+            type: "GET_DETAIL",
+            payload: dogF,
+          });
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 
@@ -15,8 +40,8 @@ export const filteredDogs = (payload) => {
   return {
     type: "FILTERED_DOGS",
     payload,
-  }
-}
+  };
+};
 
 export function orderByName(payload) {
   return {
@@ -35,41 +60,6 @@ export function getTemperaments() {
     });
   };
 }
-
-
-
-// hay que buscar por nombre completo via query params el detalle de la razo. 
-// si tiras nombre exacto te trae un solo breed
-export function getDetail(name) {
-  return async function (dispatch) {
-    try {
-      var json = await axios.get(`http://localhost:3001/api/dogs?search=${name}`);
-      return dispatch({
-        type: "GET_DETAIL",
-        payload: json.data,
-      });
-    } catch (error) {
-      // console.log(error);
-    }
-  };
-}
-
-// igual al anterior, podemos simplificar?
-// export function searchBreed(name) {
-//   return async function (dispatch) {
-//     try {
-//       var json = await axios.get(
-//         `http://localhost:3001/api/dogs?name=${name}`
-//       );
-//       return dispatch({
-//         type: "SEARCH_DOG",
-//         payload: json.data,
-//       });
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-// }
 
 export function postBreed(payload) {
   return async function () {
