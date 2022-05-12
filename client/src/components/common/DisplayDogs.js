@@ -57,7 +57,7 @@ export function DisplayDogs() {
               <Card
                 image={dog.image}
                 name={dog.name}
-                temperament={dog.temperament}
+                temperaments={dog.temperaments}
                 key={dog.id.toString()}
               />
             </Link>

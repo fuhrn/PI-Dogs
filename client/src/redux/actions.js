@@ -23,11 +23,11 @@ export function getDetail(id) {
         .get(`http://localhost:3001/api/dogs`)
         .then((dogs) => dogs.data)
         .then((dogs) => {
-          let dogF = dogs.filter((dog) => dog.id === id);
-          // let dog = dogs[0];
+          let dogFiltered = dogs.filter((dog) => dog.id === id);
+          let dog = dogFiltered[0];
           return dispatch({
             type: "GET_DETAIL",
-            payload: dogF,
+            payload: dog,
           });
         });
     } catch (error) {

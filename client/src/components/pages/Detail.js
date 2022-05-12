@@ -33,6 +33,17 @@ const DetailWrapper = styled.article`
     object-fit: cover;
   }
 
+  img:before {
+    content: " ";
+    display: block;
+    position: absolute;
+    left: 10px;
+    height: 41px;
+    width: 95px;
+    background-color: white;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAF8AAAApCAMAAABk6QUbAAAAA3NCSVQICAjb4U/gAAACRlBMVEX///+dnqLhbiZlJxImIRF9ZlcmIRGdnqImIRGdnqLhbiYwJBMmIREmIRGdnqKQkJGMi4vhbiYmIRG+WyQmIRGdnqLBcUppZV5nY1wmIRGdnqJwdIpOSkBMSD5lJxImIRGJd4CNQSAmIRGdnqLhbiardGFcXGRQTk4mIRGdnqKdeGidc2DSZSXRZSWdblqaXkKZWTuYVTVONiE2MiU0MCMmIRHdci+VRiWVRCSUQyNKMRsmIRGdnqKbm6CTk5WckpCejomdi4TXcTPVcDXhbiaFUixIMBsuKh4rJhgmIRGdnqKcnaGdnJ+bm6C2kHuTk5WRkZKQkJGMi4uLiYeIh4bhbiaDgYDebCaBf33ZbCaBfnvWaiZ/fHnRaSd9enfTaSfLZyd6d3N5dnLHZifFZSd3dG/DZCjAZCd2c267Yii5YShzb2q0YChwbWdtamRtaWOrXSioXCinXChqZmCkWih4YlFpZV6iWiieWChnY1ybWChmYluYVyhkYFqVVihjX1iUVSiTVShhXVaOUyiOUyeLUihcWFCDTydbVk5YVEt8TCZ6SyZWUkl4SyZ2SSZVUEeUQCBUT0ZzSCVuRiRQTEJrRSROSkBMSD5mQiNKRjxgQCNJRDpIRDhcPiJGQjdEQDVYPCFWOyFDPjNVOyBAPDBPOB9MNx87NytDMhxCMRw4NChlJxJgKBI2MSQ/MBs9Lho4LBkyLiEyLiI2Kxg1KxgvKh0uKRsyKBcwJxYrJhgsJRQqJhcqJBQqJRYoJBQoIhImIhImIRG88IXPAAAAwnRSTlMAERERESIiMzNEREREVWZmZmZmd3eIiIiIiJmZmZmZmaqqqru7u7u7u8zMzMzMzMzMzMzMzMzd3d3d3d3u7u7u7u7u7u7u7u7u7v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////3i+U8EAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAADUklEQVRIidWW+18MURjGJyW3Nlq5s5Gw7kRuK/dLM0lFB+lCLrmT3C+5RCZiDWmzq9IkbFYaQlq0nf/MOe+Z1dbu7K40nw/PD/u+z+w53/ec98zMLsf924pYLRAtWE8/p+tRYAwBb1u5mPKH6MGnG5grSet0Wj7dQPoKSVokCMP04UcIcySitbP1wXPcxOWUv1Cn5XPc4FVbiJL1wnPcBExkgDTSZDKNHj7A/CiCt7A00uVyzUNxfkPMTAlR/SpANmD05W/yG4GZUsz9KhDN85wvH2nycf8KJBh78ZP8BvBMFtLIeCIjVUz4MniTEe9drvlJg7TWgf9efKJBe5/8ABTAQXpMvvSIBUwKxjUse04uv9oPqejB2HmEXb6NcUkBUlToHaTqG+lxtDbf6h2n4EZv+hq37VbTaozz1PQqxidRQD42a/dHROi8SNWBHQidFMVjCMnYidDBKuslhKwYI5Rrparvy78Bl39Qp3EGGPgOdQrhizAR+GdJv1R+gbfTvfmyzxEE41crVF24Xou/DwZ09OXXOKmY1exPVU//ZS1+0P4zG/iE+V7nqxe/wuE4FJSfJ8tPA/AfyFTMBn4ELMB3qBM1+eR83wTg+5xvimb/CV+U5WKVf1mWS+nENoSOy3JFgPVXO4gagS/S1AH3pzEY36f/TDJWvKlf/0HFfZ4vS2A87U+7d46C3ddZdsuNPY9YWkJuyvrcUHx+qAafvt/cTiayT08LTVo8dMdtTucHRYHNdyje+/8zy5T23xcVxYMtWviBeH92W+K1f6IS2c9MQy2R7Ux4unAXtJmF0mmacCgAa0gV/kDbWduXqe2XTKELpAoHbPaLGYKQea/uSQ5hHLbZzxGbVcns0Vqw2ZV1j3f68cMokHGNVnmRntVKwve9wk1q7UL2JxI69wjl1NYK2R+p3eXHD11gzU9oU1ElhOZMZgvvQ2jK6oKY/xBCg8rf0MMPWaCI3QrlLyF05jNb1gThayGzV5ohfFH5G334oQqUdcPU088gtO5gwFM2CO9ymD1hh/A2ED9EgfhkN5mZNmocPFlTYpfQkDZyPJSdHLuUhq2TZoKdNXUGaGwckxROgagEHpvJKzwmhfzf8rEW1WKcSKyBfOv3IpPCKvDf6Bfrd/GWYekhrgAAAABJRU5ErkJggg==");
+  }
+
   .info {
     display: flex;
     flex-direction: column;
@@ -61,15 +72,13 @@ export default function Detail() {
     dispatch(getDetail(id));
   }, [dispatch]);
 
-  const response = useSelector((state) => state.detail);
-  const dog = response[0];
-  // console.log(dog)
-  // console.log("detail page: ", dog[0]);
+  const dog = useSelector((state) => state.detail);
+  console.log('detailDog: ', dog)
 
   return (
     <>
       <Header primary={primaryHeader} secondary={secondaryHeader} />
-      <Layout>
+      {/* <Layout>
         {dog ? (
           <>
             <H1>Dog Detail</H1>
@@ -78,9 +87,9 @@ export default function Detail() {
 
               <div className="info">
                 <h2>{dog.name}</h2>
-                <h5>Temperament</h5>
+                <h5>Temperaments</h5>
                 <div className="container">
-                  {dog.temperament.join(", ").concat(".")}
+                  {dog.temperaments?.join(", ").concat(".")}
                 </div>
                 <h5>Weight:</h5>
                 <div className="container">{dog.weight} kgs.</div>
@@ -98,7 +107,7 @@ export default function Detail() {
             </H1>
           </div>
         )}
-      </Layout>
+      </Layout> */}
     </>
   );
 }

@@ -123,8 +123,8 @@ function validate(formFields) {
   } else if (formFields.weightMax > 80) {
     errors.weightMax =
       "We are creating a dog, not an elephant 🐘!! Keep your weight under 80";
-  } else if (formFields.image === "") {
-    errors.image = "carga la imagen";
+  // } else if (formFields.image === "") {
+  //   errors.image = "carga la imagen";
   } else if (!validLifeSpan.test(formFields.life_span)) {
     errors.life_span = "Fill life-span with provided pattern '00-99'";
   } else if (formFields.temperaments.length === 0) {
@@ -176,7 +176,7 @@ export default function Create() {
       formFields.weightMin &&
       formFields.weightMax &&
       formFields.life_span &&
-      formFields.image &&
+      // formFields.image &&
       formFields.temperaments.length
     ) {
       setDisabled(false);

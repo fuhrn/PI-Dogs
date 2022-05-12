@@ -44,7 +44,7 @@ const CardWrapper = styled.article`
     }
 `;
 
-export function Card({ image, name, temperament}) {
+export function Card({ image, name, temperaments}) {
   return (
     <CardWrapper size="20rem">
       <img className="img" src={image} alt="" />
@@ -53,7 +53,7 @@ export function Card({ image, name, temperament}) {
         <h2>{name}</h2>
         <h5>Temperament</h5>
         <div className="temp-container">
-          {temperament.join(', ').concat('.')}
+          {temperaments.join(', ').concat('.')}
         </div>
       </div>
     </CardWrapper>
