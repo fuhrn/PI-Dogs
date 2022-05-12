@@ -29,19 +29,20 @@ async function getAllDogs(req, res, next) {
           attributes: ["name"],
         },
       ],
-    });
-
-    let filteredBreedsDb = breedsFromDb.map((breed) => {
-      return {
-        id: breed.id,
-        name: breed.name,
-        height: breed.height.metric,
-        weight: breed.weight.metric,
-        temperaments: breed.temperament ? breed.temperament.split(", ") : [],
-        life_span: breed.weight.metric ? breed.weight.metric : "",
-        image: breed.image.url ? breed.image.url : "",
-      };
-    });
+    }).then((result) =>
+      result.map((breed) => {
+        return {
+          id: breed.id,
+          name: breed.name,
+          height: breed.height,
+          weight: breed.weight,
+          // FUNCIONA!!!.....
+          temperaments: breed.temperaments.map((temp) => temp.name),
+          life_span: breed.life_span,
+          image: breed.image
+        };
+      })
+    );
 
   } catch (error) {
     next(error);
@@ -49,8 +50,6 @@ async function getAllDogs(req, res, next) {
 
   Promise.all([breedsFromApi, breedsFromDb])
     .then((respuesta) => {
-      // console.log(breedsFromApi, breedsFromDb);
-      // porque usaba breedsApi.map????
       let filteredBreedsApi = breedsFromApi.map((breed) => {
         return {
           id: breed.id.toString(),
@@ -63,7 +62,6 @@ async function getAllDogs(req, res, next) {
         };
       });
 
-      // console.log(BreedsDB);
       let allBreeds = [...filteredBreedsApi, ...breedsFromDb];
       res.status(200).send(allBreeds);
     })
