@@ -34,6 +34,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         allDogs: action.payload,
       };
+    case "FILTER_BY_ORIGIN":
+      return {
+        ...state,
+        allDogs: action.payload,
+      };
     default:
       return state;
   }

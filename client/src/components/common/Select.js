@@ -81,6 +81,7 @@ export function Select(props) {
         );
       setOptions((options) => temps);
     }
+    // ejectuto la funcion arriba creada
     fetchTemperaments();
   }, [dispatch]);
 
@@ -97,7 +98,7 @@ export function Select(props) {
     setIsOpen(false);
 
     let search = value;
-    let filtDogs = dogs.filter((dog) => dog.temperament.includes(search));
+    let filtDogs = dogs.filter((dog) => dog.temperaments.includes(search));
     dispatch(filteredDogs(filtDogs));
   };
 

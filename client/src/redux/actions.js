@@ -50,6 +50,13 @@ export function orderByName(payload) {
   };
 }
 
+export function filterByOrigin(payload) {
+  return {
+    type: "FILTER_BY_ORIGIN",
+    payload,
+  };
+}
+
 export function getTemperaments() {
   return function (dispatch) {
     axios.get("http://localhost:3001/api/temperaments").then((response) => {

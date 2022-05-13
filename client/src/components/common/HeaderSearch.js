@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { filteredDogs, orderByName } from "../../redux/actions";
+import { filteredDogs, orderByName, filterByOrigin } from "../../redux/actions";
 import styled from "styled-components";
 import { Select, Input } from "components/common";
 
@@ -46,32 +46,49 @@ const Div = styled.div`
 `;
 
 export function HeaderSearch() {
+  // sortByName: asc || des
   const [sortByName, setSortByName] = useState("asc");
   const handleSortByNameChange = (e) => {
     setSortByName(e.target.value);
     handleSortByName(sortByName);
   };
 
-  // preparing deep cloning dogs
+  // filteredByOrigin: all || API || created
+  const [filteredByOrigin, setFilterByOrigin] = useState("all");
+  const handleFilterByOriginChange = (e) => {
+    setFilterByOrigin(e.target.value);
+    handleFilterByOrigin(filteredByOrigin);
+  };
+
+  //
+  // preparing DEEP cloning dogs
   const dogs1 = useSelector((state) => state.copyDogs);
   let dogs = [];
 
-  // preparing deep cloning orderedDogs
+  //
+  // preparing DEEP cloning orderedDogs
   const orderedDogs1 = useSelector((state) => state.copyDogs);
   let orderedDogs = [];
+
+  //
+  // preparing DEEP cloning filteredDogs
+  const filtDogs1 = useSelector((state) => state.copyDogs);
+  let filtDogs = [];
 
   const dispatch = useDispatch();
 
   // para borrar input search luego de apretado enter
   function handleKeyDown(e) {
     if (e.key === "Enter") {
-      e.target.value = '';
+      e.target.value = "";
     }
   }
 
   // search dogs
   function handleSearchChange(e) {
+    // DEEP CLONING
     dogs = JSON.parse(JSON.stringify(dogs1));
+
     e.preventDefault();
     let search = e.target.value.toLowerCase();
     let filtDogs = dogs.filter((dog) =>
@@ -81,12 +98,14 @@ export function HeaderSearch() {
   }
 
   // sortByName: asc || des
-  function handleSortByName(order) {
+  function handleSortByName(sortByName) {
+    // DEEP CLONING
     orderedDogs = JSON.parse(JSON.stringify(orderedDogs1));
-    // let orderedDogs = dogs;
+
     const sortedDogsName =
-      order === "des"
+      sortByName === "des"
         ? orderedDogs.sort(function (a, b) {
+            console.log("order: ", sortByName);
             if (a.name.toLowerCase() > b.name.toLowerCase()) {
               return 1;
             }
@@ -96,6 +115,7 @@ export function HeaderSearch() {
             return 0;
           })
         : orderedDogs.sort(function (a, b) {
+            console.log("order: ", sortByName);
             if (a.name.toLowerCase() > b.name.toLowerCase()) {
               return -1;
             }
@@ -106,7 +126,36 @@ export function HeaderSearch() {
           });
 
     dispatch(orderByName(sortedDogsName));
-    // console.log("sort: ", sortedDogsName);
+  }
+
+  // filteredByOrigin: all || api || created
+  function handleFilterByOrigin(filteredByOrigin) {
+    // DEEP CLONING
+    filtDogs = JSON.parse(JSON.stringify(filtDogs1));
+
+    switch (filteredByOrigin) {
+      case "all":
+        console.log("all");
+        console.log(filteredByOrigin);
+        // dispatch(filterByOrigin(filtDogs));
+        break;
+      case "api":
+        console.log("api");
+        // let apiDogs = filtDogs.filter((dog) => dog.id.split("-").length > 1);
+        filtDogs = filtDogs.filter((dog) => dog.id.split("-").length > 1);
+        console.log(filtDogs);
+        console.log(filteredByOrigin);
+        // dispatch(filterByOrigin(apiDogs));
+        break;
+      case "created":
+        console.log("created");
+        console.log(filteredByOrigin);
+        // let createdDogs = filtDogs.filter((dog) => dog.id.length < 8);
+        filtDogs = filtDogs.filter((dog) => dog.id.length < 8);
+        // dispatch(filterByOrigin(createdDogs));
+    }
+
+    dispatch(filterByOrigin(filtDogs));
   }
 
   return (
@@ -141,15 +190,36 @@ export function HeaderSearch() {
         <Fieldset>
           <Legend>Sort by Breed</Legend>
           <Div>
-            <InputR type="radio" name="breed" defaultChecked />
+            <InputR
+              id="sortAll"
+              type="radio"
+              name="origin"
+              checked={filteredByOrigin === "all" ? true : false}
+              value="all"
+              onChange={handleFilterByOriginChange}
+            />
             <Label>All</Label>
           </Div>
           <Div>
-            <InputR type="radio" name="breed" />
+            <InputR
+              id="sortApi"
+              type="radio"
+              name="origin"
+              checked={filteredByOrigin === "api" ? true : false}
+              value="api"
+              onChange={handleFilterByOriginChange}
+            />
             <Label>API</Label>
           </Div>
           <Div>
-            <InputR type="radio" name="breed" />
+            <InputR
+              id="sortCreated"
+              type="radio"
+              name="origin"
+              checked={filteredByOrigin === "created" ? true : false}
+              value="created"
+              onChange={handleFilterByOriginChange}
+            />
             <Label>Created</Label>
           </Div>
         </Fieldset>

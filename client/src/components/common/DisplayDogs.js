@@ -49,7 +49,6 @@ export function DisplayDogs() {
       ></Pagination>
 
       <DogsGrid>
-        {/* <ul> */}
         {currentDogs?.map((dog) => {
           return (
             // revisar el link que esta MAL
@@ -63,7 +62,6 @@ export function DisplayDogs() {
             </Link>
           );
         })}
-        {/* </ul> */}
       </DogsGrid>
     </DogsWrapper>
   );
