@@ -1,7 +1,7 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 const NavWrapper = styled.nav`
-
   ul {
     display: flex;
     justify-content: center;
@@ -29,10 +29,16 @@ const NavWrapper = styled.nav`
       box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.2);
       cursor: pointer;
     }
+
+    &:active {
+      color: red;
+    }
   }
 `;
 
 export function Pagination({ dogsPerPage, allDogs, paginado }) {
+  // falta cambiar el estado para un boton actual
+  const [page, setPage] = useState(1)
   const pagesArray = [];
 
   for (let i = 0; i < Math.ceil(allDogs / dogsPerPage); i++) {
@@ -46,20 +52,13 @@ export function Pagination({ dogsPerPage, allDogs, paginado }) {
           <li key={number}>
             <button
               key={number}
-              onClick={() => paginado(number)}
-              // style={
-              //   number === currentPage
-              //     ? {
-              //         backgroundColor: "#fd684d",
-              //         color: "white",
-              //         border: "1px solid #777db8",
-              //       }
-              //     : {}
-              // }
+              onClick={() => {
+                paginado(number);
+                setPage(number)
+              }}
             >
               {number}
             </button>
-            {/* <a onClick={() => paginado(number)}>{number}</a> */}
           </li>
         ))}
       </ul>

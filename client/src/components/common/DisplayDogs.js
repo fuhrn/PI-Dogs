@@ -49,9 +49,8 @@ export function DisplayDogs() {
       ></Pagination>
 
       <DogsGrid>
-        {currentDogs?.map((dog) => {
+        {currentDogs.length > 0 ? currentDogs.map((dog) => {
           return (
-            // revisar el link que esta MAL
             <Link key={dog.id } to={`/dogs/${dog.id}`}>
               <Card
                 image={dog.image}
@@ -61,7 +60,10 @@ export function DisplayDogs() {
               />
             </Link>
           );
-        })}
+        })
+          : 
+          <h2>Sorry, dogs not found.</h2>
+      }
       </DogsGrid>
     </DogsWrapper>
   );

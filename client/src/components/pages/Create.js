@@ -79,6 +79,13 @@ const Form = styled.form`
   > ${Input} {
     margin-top: 20px;
   }
+
+  .error {
+    color: red;
+    font-size: small;
+    margin-top: 0px;
+    margin-bottom: 24px;
+  }
 `;
 
 // let errors = {};
@@ -91,7 +98,7 @@ function validate(formFields) {
   // ojo estos else if tienen que estar ordenados como lo estan los campos input
   // para que pueda imprimir el mensaje de error
   if (formFields.name.length < 3) {
-    errors.name = "Your breed name must have a name minimum 3 letters long";
+    errors.name = "Your breed name must have a name minimum 3 letters long.";
   } else if (formFields.name.length > 30) {
     errors.name = "That´s way too long a name. Keep it simple!!";
   } else if (!formFields.heightMin) {
@@ -101,7 +108,7 @@ function validate(formFields) {
   } else if (formFields.heightMin <= 0) {
     errors.heightMin = "Your breed can´t be shorter than 0.";
   } else if (parseInt(formFields.heightMin) >= parseInt(formFields.heightMax)) {
-    errors.heightMin = "Minimum height should be lower than maximum height";
+    errors.heightMin = "Minimum height should be lower than maximum height.";
   } else if (!formFields.heightMax) {
     errors.heightMax = "REQUIRED. Maximum height of 120 cms.";
   } else if (isNaN(parseInt(formFields.heightMax))) {
@@ -113,20 +120,20 @@ function validate(formFields) {
   } else if (isNaN(parseInt(formFields.weightMin))) {
     errors.weightMin = "Weight should be a number";
   } else if (formFields.weightMin < 1) {
-    errors.weightMin = "Your breed must weight at least more than nothing";
+    errors.weightMin = "Your breed must weight at least more than nothing.";
   } else if (!formFields.weightMax) {
     errors.weightMax = "REQUIRED. Maximum weight of 80 kg.";
   } else if (isNaN(parseInt(formFields.weightMax))) {
     errors.weightMax = "Weight should be a number";
-  } else if (parseInt(formFields.weightMax) <= parseInt(formFields.weightMin)) {
-    errors.weightMax = "Maximum weight should be higher than minimum weight";
+  } else if (parseInt(formFields.weightMax) < parseInt(formFields.weightMin)) {
+    errors.weightMax = "Maximum weight should be higher than minimum weight.";
   } else if (formFields.weightMax > 80) {
     errors.weightMax =
-      "We are creating a dog, not an elephant 🐘!! Keep your weight under 80";
+      "We are creating a dog, not an elephant 🐘!! Keep your weight under 80.";
   // } else if (formFields.image === "") {
   //   errors.image = "carga la imagen";
   } else if (!validLifeSpan.test(formFields.life_span)) {
-    errors.life_span = "Fill life-span with provided pattern '00-99'";
+    errors.life_span = "Fill life-span with provided pattern '00-99'.";
   } else if (formFields.temperaments.length === 0) {
     errors.temperaments = "Select one temperament at least.";
   }
@@ -180,11 +187,8 @@ export default function Create() {
       formFields.temperaments.length
     ) {
       setDisabled(false);
-      // console.log("1_disabled: ", disabled);
     } else {
       setDisabled(true);
-      // console.log("errores: ", errors);
-      // console.log("2_disabled: ", disabled);
     }
   }, [errors, formFields]);
 
@@ -197,8 +201,6 @@ export default function Create() {
       };
 
       setErrors(validate(newInput));
-
-      // console.log("errors: ", errors);
 
       return newInput;
     });
@@ -230,10 +232,15 @@ export default function Create() {
     e.preventDefault();
     setLoading(true);
 
+    if (formFields.image === '') {
+      formFields.image =
+        "https://static8.depositphotos.com/1000792/1065/v/950/depositphotos_10659058-stock-illustration-cute-dog.jpg";
+    }
+
     dispatch(postBreed(formFields));
     setLoading(false);
 
-    alert("Doggie created 👏");
+    alert("Great!! Dog created 👏");
     setFormFields({
       name: "",
       heightMin: "",
@@ -359,7 +366,7 @@ export default function Create() {
                   name="image"
                   type="url"
                   pattern="https://.*"
-                  placeholder="https://example.com - leave blank if none"
+                  placeholder="https://mylittledog.jpg - leave blank if none"
                 />
               </Label>
               {errors.image && (

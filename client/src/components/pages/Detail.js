@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetail } from "../../redux/actions";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Header, Layout } from "components/common";
 import styled from "styled-components";
 import theme from "themes/light";
@@ -24,6 +24,7 @@ const DetailWrapper = styled.article`
   background-color: ${(p) => p.theme.secondaryColor};
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
   margin: auto;
+  margin-bottom: 20px;
   cursor: pointer;
 
   .img {
@@ -65,6 +66,19 @@ const DetailWrapper = styled.article`
   }
 `;
 
+const NavUnlisted = styled.ul`
+  text-decoration: none;
+  display: inline-block;
+  background-color: ${primaryHeader};
+  border-radius: 10px;
+  margin-top: 10px;
+  padding: 10px;
+`;
+
+const NoDogWrapper = styled.div`
+  margin: 50px;
+`
+
 export default function Detail() {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -73,7 +87,18 @@ export default function Detail() {
   }, [dispatch]);
 
   const dog = useSelector((state) => state.detail);
-  console.log('detailDog: ', dog)
+  // console.log('detailDog: ', dog)
+
+  if (dog === undefined) {
+    return (
+      <NoDogWrapper>
+        <div>No dog with id {id}, sorry</div>
+        <NavUnlisted>
+          <Link to="/dogs">Volver a Dogs</Link>
+        </NavUnlisted>
+      </NoDogWrapper>
+    );
+  }
 
   return (
     <>
@@ -99,6 +124,10 @@ export default function Detail() {
                 <div className="container">{dog.life_span} years.</div>
               </div>
             </DetailWrapper>
+
+            <NavUnlisted>
+              <Link to="/dogs">Volver a Dogs</Link>
+            </NavUnlisted>
           </>
         ) : (
           <div>
