@@ -54,14 +54,14 @@ export function HeaderSearch() {
   };
 
   // filteredByOrigin: all || API || created
-  const [filteredByOrigin, setFilterByOrigin] = useState("all");
+  const [filteredByOrigin, setFilterByOrigin] = useState("api");
   const handleFilterByOriginChange = (e) => {
     setFilterByOrigin(e.target.value);
     handleFilterByOrigin(filteredByOrigin);
   };
 
   //
-  // preparing DEEP cloning dogs
+  // preparing DEEP cloning dogs for searching
   const dogs1 = useSelector((state) => state.copyDogs);
   let dogs = [];
 
@@ -91,10 +91,10 @@ export function HeaderSearch() {
 
     e.preventDefault();
     let search = e.target.value.toLowerCase();
-    let filtDogs = dogs.filter((dog) =>
+    let searchDogs = dogs.filter((dog) =>
       dog.name.toLowerCase().includes(search)
     );
-    dispatch(filteredDogs(filtDogs));
+    dispatch(filteredDogs(searchDogs));
   }
 
   // sortByName: asc || des
@@ -132,30 +132,31 @@ export function HeaderSearch() {
   function handleFilterByOrigin(filteredByOrigin) {
     // DEEP CLONING
     filtDogs = JSON.parse(JSON.stringify(filtDogs1));
+    let filtDogsApi;
+    let filtDogsCreated;
+    // console.log("inicio filtDogs: ", filtDogs);
 
     switch (filteredByOrigin) {
-      case "all":
-        console.log("all");
-        console.log(filteredByOrigin);
-        // dispatch(filterByOrigin(filtDogs));
-        break;
+      // case "all":
+      //   console.log("all");
+      //   // console.log(filteredByOrigin);
+      //   // dispatch(filterByOrigin(filtDogs));
+      //   console.log("filtDogsAll: ", filtDogs);
+      //   break;
       case "api":
-        console.log("api");
-        // let apiDogs = filtDogs.filter((dog) => dog.id.split("-").length > 1);
-        filtDogs = filtDogs.filter((dog) => dog.id.split("-").length > 1);
-        console.log(filtDogs);
-        console.log(filteredByOrigin);
-        // dispatch(filterByOrigin(apiDogs));
+        // console.log("created");
+        filtDogsApi = filtDogs.filter(
+          (dog) => dog.id.split("-").length > 1
+        );
+        // console.log("filtDogsCreated: ", filtDogsCreated);
+        dispatch(filterByOrigin(filtDogsApi));
         break;
       case "created":
-        console.log("created");
-        console.log(filteredByOrigin);
-        // let createdDogs = filtDogs.filter((dog) => dog.id.length < 8);
-        filtDogs = filtDogs.filter((dog) => dog.id.length < 8);
-        // dispatch(filterByOrigin(createdDogs));
+        // console.log("api");
+        filtDogsCreated = filtDogs.filter((dog) => dog.id.length < 8);
+        // console.log("filtDogsApi: ", filtDogsApi);
+        dispatch(filterByOrigin(filtDogsCreated));
     }
-
-    dispatch(filterByOrigin(filtDogs));
   }
 
   return (
@@ -189,7 +190,7 @@ export function HeaderSearch() {
         </Fieldset>
         <Fieldset>
           <Legend>Sort by Breed</Legend>
-          <Div>
+          {/* <Div>
             <InputR
               id="sortAll"
               type="radio"
@@ -199,7 +200,7 @@ export function HeaderSearch() {
               onChange={handleFilterByOriginChange}
             />
             <Label>All</Label>
-          </Div>
+          </Div> */}
           <Div>
             <InputR
               id="sortApi"
