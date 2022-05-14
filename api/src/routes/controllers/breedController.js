@@ -3,6 +3,20 @@ const axios = require("axios");
 const { Breed, Temperament, breedTemperament } = require("../../db");
 const { API_KEY } = process.env;
 
+async function deleteDog(req, res, next) {
+  try {
+    const id = req.params.id;
+    const dog = await Breed.findByPk(id);
+    if (!dog) {
+      res.status(400).send("Dog no encontrado");
+    }
+    await dog.destroy();
+    res.status(200).send(`se ha borrado el perro con el id ${id}`)
+    } catch (error) {
+      next(error);
+    }
+}
+
 // usando try / catch
 async function getAllDogs(req, res, next) {
   let breedsFromApi;
@@ -108,4 +122,5 @@ module.exports = {
   getAllDogs,
   // getDogById,
   createDog,
+  deleteDog
 };

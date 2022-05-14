@@ -41,7 +41,7 @@ conn.sync({
   // cargamos la Bd con los nombres de los temperamentos
   getTemperaments()
 
-  server.listen(3001, () => {
-    console.log('%s listening at 3001'); // eslint-disable-line no-console
+  server.listen(process.env.PORT, () => {
+    console.log('%s listening at 3000'); // eslint-disable-line no-console
   });
 });
