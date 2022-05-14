@@ -95,9 +95,12 @@ function validate(formFields) {
 
   let errors = {};
 
-  // ojo estos else if tienen que estar ordenados como lo estan los campos input
-  // para que pueda imprimir el mensaje de error
+  // if (nameExists) {
+  //   errors.name = "Name already exists.";
+  // }
   if (formFields.name.length < 3) {
+    // ojo estos else if tienen que estar ordenados como lo estan los campos input
+    // para que pueda imprimir el mensaje de error
     errors.name = "Your breed name must have a name minimum 3 letters long.";
   } else if (formFields.name.length > 30) {
     errors.name = "That´s way too long a name. Keep it simple!!";
@@ -130,8 +133,6 @@ function validate(formFields) {
   } else if (formFields.weightMax > 80) {
     errors.weightMax =
       "We are creating a dog, not an elephant 🐘!! Keep your weight under 80.";
-  // } else if (formFields.image === "") {
-  //   errors.image = "carga la imagen";
   } else if (!validLifeSpan.test(formFields.life_span)) {
     errors.life_span = "Fill life-span with provided pattern '00-99'.";
   } else if (formFields.temperaments.length === 0) {
@@ -174,6 +175,9 @@ export default function Create() {
     temperaments: [],
   });
 
+  // PRUEBA error duplicado
+  const [nameExists, setNameExists] = useState(false);
+
   useEffect(() => {
     if (
       !Object.getOwnPropertyNames(errors).length &&
@@ -183,7 +187,6 @@ export default function Create() {
       formFields.weightMin &&
       formFields.weightMax &&
       formFields.life_span &&
-      // formFields.image &&
       formFields.temperaments.length
     ) {
       setDisabled(false);
@@ -192,6 +195,10 @@ export default function Create() {
     }
   }, [errors, formFields]);
 
+  // a usar para control de nombre duplicado
+  const dogs = useSelector((state) => state.copyDogs);
+  // console.log("dogs: ",dogs);
+
   function handleInputChange(e) {
     setFormFields((input) => {
       // para asegurarme que siempre tengo el input actualizado...
@@ -199,6 +206,21 @@ export default function Create() {
         ...input,
         [e.target.name]: e.target.value,
       };
+
+      let search = input.name;
+      let searchDogs = [];
+      // console.log(search);
+      searchDogs = dogs.filter((dog) =>
+        dog.name.toLowerCase().includes(search)
+      );
+      // console.log(searchDogs);
+      // if (searchDogs !== []) {
+      //   setNameExists(true);
+      // } else {
+      //   setNameExists(false);
+      // }
+
+      console.log('nombre existe?: ', searchDogs)
 
       setErrors(validate(newInput));
 
@@ -232,7 +254,7 @@ export default function Create() {
     e.preventDefault();
     setLoading(true);
 
-    if (formFields.image === '') {
+    if (formFields.image === "") {
       formFields.image =
         "https://static8.depositphotos.com/1000792/1065/v/950/depositphotos_10659058-stock-illustration-cute-dog.jpg";
     }

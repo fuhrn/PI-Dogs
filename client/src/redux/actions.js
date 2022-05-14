@@ -3,7 +3,7 @@ import axios from "axios";
 export function getDogs() {
   return function (dispatch) {
     try {
-      axios.get("http://localhost:3001/api/dogs").then((response) => {
+      axios.get("/api/dogs").then((response) => {
         return dispatch({
           type: "GET_DOGS",
           payload: response.data,
@@ -20,7 +20,7 @@ export function getDetail(id) {
     try {
       var dogf;
       var json = await axios
-        .get(`http://localhost:3001/api/dogs`)
+        .get(`/api/dogs`)
         .then((dogs) => dogs.data)
         .then((dogs) => {
           let dogFiltered = dogs.filter((dog) => dog.id === id);
@@ -59,7 +59,7 @@ export function filterByOrigin(payload) {
 
 export function getTemperaments() {
   return function (dispatch) {
-    axios.get("http://localhost:3001/api/temperaments").then((response) => {
+    axios.get("/api/temperaments").then((response) => {
       return dispatch({
         type: "GET_TEMPERAMENTS",
         payload: response.data,
@@ -71,7 +71,7 @@ export function getTemperaments() {
 export function postBreed(payload) {
   return async function () {
     try {
-      var json = await axios.post(`http://localhost:3001/api/dogs`, payload);
+      var json = await axios.post(`/api/dogs`, payload);
       return json;
     } catch (error) {
       console.log(error);
