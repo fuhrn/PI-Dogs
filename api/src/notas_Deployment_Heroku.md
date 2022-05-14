@@ -1,3 +1,16 @@
+<!-- NOTAS DE EXPERIENCIA DE DEPLOYAR DOGS -->
+1) para deployar 
+    Deploy your application
+    Commit your code to the repository and deploy it to Heroku using Git.
+
+    $ git add .
+    $ git commit -am "make it better"
+    $ git push heroku master
+  OJO que si me rebota el push, tengo que commitiar nuevamente para evitar warning ## Warning - The same version of this code has already been built: 0084c6b.....
+
+2) el git push hay que hacerlo desde el root project y se indica en heroku settings / config vars / PROJECT_APP el directorio donde esta la aplicacion, en nuestro caso "app/"
+
+
 <!-- video clase Diego Rodriguez sobre deployment -->
 https://vimeo.com/510792531/20d64d4a98
 

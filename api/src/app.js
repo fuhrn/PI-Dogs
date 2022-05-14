@@ -11,7 +11,7 @@ server.name = 'API';
 
 
 // agregado segun workshop deployment Diego Rodriguez, y le puse '*' al header mas abajo
-server.use(cors())
+// server.use(cors())
 
 server.use(express.urlencoded({
   extended: true,
