@@ -1,5 +1,10 @@
 <!-- NOTAS DE EXPERIENCIA DE DEPLOYAR DOGS -->
-1) para deployar 
+1) luego de crear el proyecto en Heroku, desde la terminal hacer
+    $ cd my-project/    --> ojo con esto, ir al root y no a la carpeta api como yo hice inicialmente
+    $ git init
+    $ heroku git:remote -a henry-dogs-pi
+
+2) para deployar 
     Deploy your application
     Commit your code to the repository and deploy it to Heroku using Git.
 
