@@ -26,6 +26,7 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.16",
     "pg": "^8.5.1",
+    "react-scripts": "^5.0.1",
     "redux-devtools-extension": "^2.13.9",
     "sequelize": "^6.3.5"
   },
