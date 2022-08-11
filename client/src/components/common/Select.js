@@ -75,6 +75,7 @@ export function Select(props) {
         .get("/api/temperaments")
         // .get("http://localhost:3000/api/temperaments") no funciona deployado asi
         .then((result) => result.data)
+        .then((result) => console.log('result', result) )
         .then((result) =>
           result.map((temp) => {
             return { ID: temp.ID, name: temp.name };
