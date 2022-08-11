@@ -35,7 +35,7 @@ const {
 
 // Syncing all the models at once.
 conn.sync({
-  force: true
+  force: false
 }).then(() => {
   
   // cargamos la Bd con los nombres de los temperamentos
