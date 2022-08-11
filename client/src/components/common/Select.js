@@ -72,7 +72,8 @@ export function Select(props) {
     // llenar el array para las options del select de temperamento
     async function fetchTemperaments() {
       const temps = await axios
-        .get("http://localhost:3000/api/temperaments")
+        .get("/api/temperaments")
+        // .get("http://localhost:3000/api/temperaments") no funciona deployado asi
         .then((result) => result.data)
         .then((result) =>
           result.map((temp) => {
