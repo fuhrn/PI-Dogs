@@ -39,6 +39,8 @@ conn.sync({
 }).then(() => {
   
   // cargamos la Bd con los nombres de los temperamentos
+  // ago-22: llamamos a una api en vez de a una funcion, para que pueda
+  // correrse en Heroku tambien
   getTemperaments()
 
   server.listen(process.env.PORT, () => {
