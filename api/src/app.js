@@ -7,6 +7,9 @@ require('./db.js');
 
 const server = express();
 
+// agregado ago 2022
+const cors = require('cors')
+
 server.name = 'API';
 
 

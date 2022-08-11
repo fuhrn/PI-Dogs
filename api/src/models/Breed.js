@@ -16,6 +16,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    // comentarios
     height: {
       type: DataTypes.STRING,
       allowNull: false,
