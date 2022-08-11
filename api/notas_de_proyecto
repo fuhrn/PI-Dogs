@@ -4,6 +4,7 @@ c) para duplicar vsCode y verlo en dos pantallas: con duplicate Workspace p.e., 
 
 
 Comandos PostgreSQL mas usuales
+con psql entro a la terminal psql
 1) You can use the \l command to get a list of all available databases.
 2) Enlisting the available tables in the current database: \dt
 3) Switching to another database: \c <database_name>
@@ -19,6 +20,7 @@ Comandos PostgreSQL mas usuales
 13) List available functions: \df
 14) List available views: \dv
 15) List users and their roles:\du
+15) List tables once connected to db:\dt
 16) Command history: \s. If you want to save the command history to a file, you need to specify the file name followed the \s command as follows: \s filename
 17) Quit psql: \q
 18) Para saber si tengo conexiones a una DB 'newDb': select datname,numbackends from  pg_stat_database where datname='newdb';
@@ -27,9 +29,8 @@ NOTAS:
 CREATE DATABASE "food";     -> los nombres entre comillas, ojo
 SELECT * FROM table;        -> para ver los registros de la table
 
-PENDIENTES:
-a) como conseguir todos los tipos de dieta posibles. La base es lo que te ofrece la pagina, pero el resto hay que sacarlos de las recetas directamente....
-
+CONSULTAR DATOS EN TABLA
+SELECT * FROM table
 
 
 
