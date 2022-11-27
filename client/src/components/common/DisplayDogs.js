@@ -62,7 +62,7 @@ export function DisplayDogs() {
           );
         })
           : 
-          <h2>Sorry, dogs not found.</h2>
+          <h2>Wait please, findings your dogs...</h2>
       }
       </DogsGrid>
     </DogsWrapper>
