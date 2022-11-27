@@ -6,12 +6,6 @@ const {
   DB_USER, DB_PASSWORD, DB_HOST, DB_NAME
 } = process.env;
 
-// aqui tengo hardcodeado el nombre de la base de datos, cuando trabaje para el PI
-// const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/dogs`, {
-//   logging: false, // set to console.log to see the raw SQL queries
-//   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-// });
-
 let sequelize =
   process.env.NODE_ENV === "production"
     ? new Sequelize({
