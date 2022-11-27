@@ -16,11 +16,16 @@
 - Aprender y practicar el workflow de GIT.
 - Usar y practicar testing.
 
-## Horarios y Fechas
+## Cómo hice el proyecto Dogs
 
 La aplicación despliega las razas de perros de la API Thedogapi, y permite además al usuario a crear nuevas razas de perros, asignando uno o más temperamentos a la nueva raza creada (relación uno a muchos).
-Adicionalmente, la aplicación tiene buscadores por nombre de la raza, por temperamento, y permite filtrar las razas por orden alfabético, y por razas de la API, o por las creadas por el usuario. No se permitía tampoco cargar los datos de las razas de perros en la base de datos, solo la de los temperamentos (relación muchos a muchos entre temperamentos y razas) y las razas creadas por el usuario. Por lo tanto las consultas en la aplicación son al mismo tiempo a la API (por las razas desde allí consultadas) y a la base de datos para las razas creadas por el usuario.
+
+Adicionalmente, la aplicación tiene buscadores por nombre de la raza, por temperamento, y permite filtrar las razas por orden alfabético, y por razas de la API, o por las creadas por el usuario. No se permitía tampoco cargar los datos de las razas de perros en la base de datos, solo la de los temperamentos (relación muchos a muchos entre temperamentos y razas) y las razas creadas por el usuario.
+
+Por lo tanto las consultas en la aplicación son al mismo tiempo a la API (por las razas desde allí consultadas) y a la base de datos para las razas creadas por el usuario.
 
 Resumidamente, esta aplicación tiene estas características:
-<u>Back End<u>: servidor Express Node.js con base de datos Postgre y ORM Sequelize. Servidor desplegado en <b>Heroku<b>.
-<u>Front End<u>: aplicación con componentes React y Styled Components. No se permitia usar en el proyecto ningún tipo de framework de estilos (tipo Bootstrap / Tailwind) y ninguna librería, salvo React y Redux. Uso Redux para el estado global de la aplicación. El front end está desplegado en <b>Vercel<b>. 
+
+<u>Back End</u>: servidor Express Node.js con base de datos Postgre y ORM Sequelize. Servidor desplegado en <b>Heroku</b>.
+
+<u>Front End</u>: aplicación con componentes React y Styled Components. No se permitia usar en el proyecto ningún tipo de framework de estilos (tipo Bootstrap / Tailwind) y ninguna librería, salvo React y Redux. Uso Redux para el estado global de la aplicación. El front end está desplegado en <b>Vercel</b>. 
