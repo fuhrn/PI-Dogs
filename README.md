@@ -34,7 +34,7 @@ La aplicación está deployada en: https://pi-dogs-fuhrn.vercel.app/
 
 ![Alt text](client/src/assets/home.png)
 
-![Alt text](client/src/assets/search.png)
+![Alt text](client/src/assets/detailSearch.png)
 
 ![Alt text](client/src/assets/detail.png)
 
