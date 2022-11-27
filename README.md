@@ -30,7 +30,7 @@ Resumidamente, esta aplicación tiene estas características:
 
 **Front End:** Aplicación con componentes React y Styled Components. No se permitia usar en el proyecto ningún tipo de framework de estilos (tipo Bootstrap / Tailwind) y ninguna librería, salvo React y Redux. Uso Redux para el estado global de la aplicación. El front end está desplegado en <b>Vercel</b>.
 
-La aplicación está deployada en: 
+La aplicación está deployada en: https://pi-dogs-fuhrn.vercel.app/
 
 ![Alt text](client/src/assets/home.png)
 
