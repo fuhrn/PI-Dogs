@@ -26,6 +26,8 @@ Por lo tanto las consultas en la aplicación son al mismo tiempo a la API (por l
 
 Resumidamente, esta aplicación tiene estas características:
 
-<u>Back End</u>: servidor Express Node.js con base de datos Postgre y ORM Sequelize. Servidor desplegado en <b>Heroku</b>.
+###### Back End: 
+servidor Express Node.js con base de datos Postgre y ORM Sequelize. Servidor desplegado en <b>Heroku</b>.
 
-<u>Front End</u>: aplicación con componentes React y Styled Components. No se permitia usar en el proyecto ningún tipo de framework de estilos (tipo Bootstrap / Tailwind) y ninguna librería, salvo React y Redux. Uso Redux para el estado global de la aplicación. El front end está desplegado en <b>Vercel</b>. 
+Front End: 
+aplicación con componentes React y Styled Components. No se permitia usar en el proyecto ningún tipo de framework de estilos (tipo Bootstrap / Tailwind) y ninguna librería, salvo React y Redux. Uso Redux para el estado global de la aplicación. El front end está desplegado en <b>Vercel</b>. 
